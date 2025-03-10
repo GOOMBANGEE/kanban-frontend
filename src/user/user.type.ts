@@ -27,13 +27,13 @@ export type UserState = {
   loginModal: boolean;
   loginErrorMessage: string | undefined;
 
-  //user setting
-  userSettingModal: boolean;
+  // setting user
+  settingUser: boolean;
   newUsername: string | undefined;
   prevPassword: string | undefined;
   newPassword: string | undefined;
   newConfirmPassword: string | undefined;
-  userDeleteModal: boolean;
+  deleteUser: boolean;
 
   codeError: string | undefined;
   loginError: string | undefined;

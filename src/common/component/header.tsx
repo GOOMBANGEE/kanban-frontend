@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useTokenStore } from "../store/token.store.ts";
 import { useUserStore } from "../../user/user.store.ts";
-import UserSetting from "../../user/component/user-setting.tsx";
-import UserDelete from "../../user/component/user-delete.tsx";
+import SettingUser from "../../user/component/setting-user.tsx";
+import DeleteUser from "../../user/component/delete-user.tsx";
 
 export default function Header() {
   const { setUserState } = useUserStore();
@@ -16,7 +16,7 @@ export default function Header() {
 
   const handleClickUserIcon = () => {
     if (tokenState.accessToken) {
-      setUserState({ userSettingModal: true });
+      setUserState({ settingUser: true });
       return;
     }
     setUserState({ loginModal: true });
@@ -28,8 +28,8 @@ export default function Header() {
         "border-customBlack-700 flex h-14 w-full items-center border-b-2 p-2"
       }
     >
-      <UserSetting />
-      <UserDelete />
+      <SettingUser />
+      <DeleteUser />
 
       <button
         className={"mr-auto cursor-pointer"}

@@ -1,4 +1,6 @@
-import { ErrorMessageProps } from "../common.type.ts";
+type ErrorMessageProps = {
+  message: string | undefined;
+};
 
 export default function ErrorMessage(props: Readonly<ErrorMessageProps>) {
   return (

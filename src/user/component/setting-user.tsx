@@ -1,30 +1,19 @@
 import { useUserStore } from "../user.store.ts";
-import useUserUpdate from "../api/user-update.api.ts";
+import useUpdateUser from "../api/update-user.api.ts";
 import useLogout from "../api/logout.api.ts";
-import { ChangeEvent, FormEvent, useRef } from "react";
+import { ChangeEvent, FormEvent } from "react";
 import usePasswordRegex from "../../common/util/password-regex.util.ts";
 import ErrorMessage from "../../common/component/error-message.tsx";
-import { useClickOutside } from "../../common/util/click-outside.ts";
 import { UserState, UserStateKey } from "../user.type.ts";
 import useUsernameRegex from "../../common/util/username-regex.util.ts";
+import ModalBackground from "../../common/component/modal-background.tsx";
 
-export default function UserSetting() {
+export default function SettingUser() {
   const { usernameRegex } = useUsernameRegex();
   const { passwordRegex } = usePasswordRegex();
   const { logout } = useLogout();
-  const { userUpdate } = useUserUpdate();
+  const { updateUser } = useUpdateUser();
   const { userState, setUserState } = useUserStore();
-
-  const modalRef = useRef<HTMLDivElement>(null);
-  useClickOutside({
-    ref: modalRef,
-    onClose: () =>
-      setUserState({
-        userSettingModal: false,
-        passwordErrorMessage: undefined,
-      }),
-    enabled: userState.userSettingModal,
-  });
 
   // logout
   const handleClickLogout = async () => {
@@ -38,7 +27,7 @@ export default function UserSetting() {
     e.preventDefault();
     if (userState.newUsername) {
       if (!usernameRegex()) return;
-      userUpdate();
+      updateUser();
       return;
     }
 
@@ -49,7 +38,7 @@ export default function UserSetting() {
       setUserState({ passwordErrorMessage: "비밀번호가 일치하지 않습니다" });
       return;
     }
-    userUpdate();
+    updateUser();
   };
 
   const handleChangeInput =
@@ -64,35 +53,30 @@ export default function UserSetting() {
   // user delete
   const handleClickDelete = async () => {
     setUserState({
-      userDeleteModal: true,
-      userSettingModal: false,
+      deleteUser: true,
+      settingUser: false,
       passwordErrorMessage: undefined,
     });
   };
 
   return (
     <>
-      {userState.userSettingModal ? (
-        <div
-          style={{ zIndex: 11 }}
-          className={
-            "fixed inset-0 flex h-full w-full items-center justify-center"
+      {userState.settingUser ? (
+        <ModalBackground
+          onClose={() =>
+            setUserState({
+              settingUser: false,
+              passwordErrorMessage: undefined,
+            })
           }
+          enabled={userState.settingUser}
         >
-          <div
-            className={
-              "bg-customBlack-400 fixed inset-0 h-full w-full opacity-70"
-            }
-          ></div>
-          <div
-            ref={modalRef}
-            className={"bg-customBlack-700 absolute z-20 rounded px-6 py-4"}
-          >
-            {/* user update */}
+          <div className={"bg-customBlack-700 absolute z-20 rounded px-6 py-4"}>
+            {/* update user */}
             <form onSubmit={handleSubmit}>
               <ul className={"flex flex-col gap-y-2"}>
                 {/* username */}
-                <ul className={"flex"}>
+                <li className={"flex"}>
                   <input
                     type={"text"}
                     placeholder={"username"}
@@ -105,7 +89,7 @@ export default function UserSetting() {
                   />
                   {/* logout */}
                   <button onClick={handleClickLogout}>Logout</button>
-                </ul>
+                </li>
 
                 {/* previous password */}
                 <li>
@@ -156,7 +140,7 @@ export default function UserSetting() {
             {/* delete */}
             <button onClick={handleClickDelete}>Delete</button>
           </div>
-        </div>
+        </ModalBackground>
       ) : null}
     </>
   );

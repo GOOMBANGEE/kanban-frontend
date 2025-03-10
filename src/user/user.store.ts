@@ -22,13 +22,13 @@ const initialUserState = {
   loginModal: false,
   loginErrorMessage: undefined,
 
-  // user setting
-  userSettingModal: false,
+  // setting user
+  settingUser: false,
   newUsername: undefined,
   prevPassword: undefined,
   newPassword: undefined,
   newConfirmPassword: undefined,
-  userDeleteModal: false,
+  deleteUser: false,
 
   codeError: undefined,
   loginError: undefined,

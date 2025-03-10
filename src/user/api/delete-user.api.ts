@@ -1,10 +1,10 @@
 import { useEnvStore } from "../../common/store/env.store.ts";
 import axios from "axios";
 
-export default function useUserDelete() {
+export default function useDeleteUser() {
   const { envState } = useEnvStore();
 
-  const userDelete = async () => {
+  const deleteUser = async () => {
     const userUrl = envState.userUrl;
     try {
       await axios.delete(`${userUrl}`, { withCredentials: true });
@@ -14,5 +14,5 @@ export default function useUserDelete() {
     }
   };
 
-  return { userDelete };
+  return { deleteUser };
 }

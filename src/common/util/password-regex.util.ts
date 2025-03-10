@@ -1,5 +1,8 @@
 import { useUserStore } from "../../user/user.store.ts";
-import { PasswordRegex } from "../common.type.ts";
+
+type PasswordRegex = {
+  password: string;
+};
 
 export default function usePasswordRegex() {
   const { setUserState } = useUserStore();
