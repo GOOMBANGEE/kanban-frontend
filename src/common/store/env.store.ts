@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { EnvState } from "../common.type.ts";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const BASE_URL_AUTH = import.meta.env.VITE_BASE_URL_AUTH;
 const BASE_URL_USER = import.meta.env.VITE_BASE_URL_USER;
 const BASE_URL_BOARD = import.meta.env.VITE_BASE_URL_BOARD;
@@ -16,6 +17,7 @@ type EnvStore = {
 };
 
 const initialEnvState: EnvState = {
+  baseUrl: BASE_URL,
   authUrl: BASE_URL_AUTH,
   userUrl: BASE_URL_USER,
   boardUrl: BASE_URL_BOARD,

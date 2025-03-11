@@ -1,4 +1,5 @@
 export type EnvState = {
+  baseUrl: string;
   authUrl: string;
   userUrl: string;
   boardUrl: string;
@@ -7,6 +8,10 @@ export type EnvState = {
   websocketUrl: string;
   timeLocale: string;
   timeZone: string;
+};
+
+export type GlobalState = {
+  loading: boolean;
 };
 
 export type TokenState = {
