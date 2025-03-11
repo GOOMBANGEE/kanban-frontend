@@ -1,5 +1,5 @@
-import useUsernameRegex from "../../common/util/username-regex.util.ts";
-import usePasswordRegex from "../../common/util/password-regex.util.ts";
+import useUsernameRegex from "../util/username-regex.util.ts";
+import usePasswordRegex from "../util/password-regex.util.ts";
 import useLogin from "../api/login.api.ts";
 import userRefreshAccessToken from "../../common/api/refresh-access-token.api.ts";
 import { useUserStore } from "../user.store.ts";

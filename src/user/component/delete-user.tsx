@@ -23,7 +23,7 @@ export default function DeleteUser() {
           onClose={() => setUserState({ deleteUser: false })}
           enabled={userState.deleteUser}
         >
-          <div className={"bg-customBlack-700 z-10 rounded-sm px-6 py-4"}>
+          <div className={"bg-customBlack-700 rounded-sm px-6 py-4"}>
             <div>Are you sure you want to delete your account?</div>
             <button onClick={handleClickDelete}>Delete</button>
             <button onClick={handleClickCancel}>Cancel</button>

@@ -25,8 +25,7 @@ export default function ModalBackground({
         ref={ref}
         className={"bg-customBlack-400 fixed inset-0 h-full w-full opacity-70"}
       ></div>
-
-      {children}
+      <div className={"absolute z-20"}>{children}</div>
     </div>
   );
 }

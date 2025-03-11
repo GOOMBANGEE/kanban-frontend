@@ -1,4 +1,4 @@
-import { useUserStore } from "../../user/user.store.ts";
+import { useUserStore } from "../user.store.ts";
 
 type PasswordRegex = {
   password: string;

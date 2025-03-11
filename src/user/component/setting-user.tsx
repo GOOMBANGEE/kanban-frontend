@@ -2,10 +2,10 @@ import { useUserStore } from "../user.store.ts";
 import useUpdateUser from "../api/update-user.api.ts";
 import useLogout from "../api/logout.api.ts";
 import { ChangeEvent, FormEvent } from "react";
-import usePasswordRegex from "../../common/util/password-regex.util.ts";
+import usePasswordRegex from "../util/password-regex.util.ts";
 import ErrorMessage from "../../common/component/error-message.tsx";
 import { UserState, UserStateKey } from "../user.type.ts";
-import useUsernameRegex from "../../common/util/username-regex.util.ts";
+import useUsernameRegex from "../util/username-regex.util.ts";
 import ModalBackground from "../../common/component/modal-background.tsx";
 
 export default function SettingUser() {
@@ -71,7 +71,7 @@ export default function SettingUser() {
           }
           enabled={userState.settingUser}
         >
-          <div className={"bg-customBlack-700 absolute z-20 rounded px-6 py-4"}>
+          <div className={"bg-customBlack-700 rounded px-6 py-4"}>
             {/* update user */}
             <form onSubmit={handleSubmit}>
               <ul className={"flex flex-col gap-y-2"}>

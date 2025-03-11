@@ -1,4 +1,4 @@
-import { useUserStore } from "../../user/user.store.ts";
+import { useUserStore } from "../user.store.ts";
 
 export default function useUsernameRegex() {
   const { userState, setUserState } = useUserStore();
