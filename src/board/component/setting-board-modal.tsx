@@ -2,7 +2,7 @@ import { useBoardStore } from "../board.store.ts";
 import ModalBackground from "../../common/component/modal-background.tsx";
 import IconAttachment from "../../common/component/icon-attachment.tsx";
 import { BoardState, BoardStateKey } from "../board.type.ts";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useRef } from "react";
 import useTitleRegexBoard from "../util/title-regex-board.util.ts";
 import useUpdateBoard from "../api/update-board.api.ts";
 
@@ -10,6 +10,7 @@ export default function SettingBoardModal() {
   const { boardState, setBoardState, resetBoardState } = useBoardStore();
   const { titleRegex } = useTitleRegexBoard();
   const { updateBoard } = useUpdateBoard();
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleClickDelete = () => {
     setBoardState({ deleteModal: true });
@@ -31,10 +32,14 @@ export default function SettingBoardModal() {
     <>
       {boardState.settingModal ? (
         <ModalBackground
+          ref={ref}
           onClose={() => resetBoardState()}
           enabled={boardState.settingModal}
         >
-          <div className={"bg-customBlack-700 h-52 rounded-sm px-6 py-4"}>
+          <div
+            ref={ref}
+            className={"bg-customBlack-700 h-52 rounded-sm px-6 py-4"}
+          >
             <button onClick={handleClickDelete} className={"w-full text-end"}>
               delete
             </button>

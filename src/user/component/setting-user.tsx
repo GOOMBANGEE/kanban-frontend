@@ -1,7 +1,7 @@
 import { useUserStore } from "../user.store.ts";
 import useUpdateUser from "../api/update-user.api.ts";
 import useLogout from "../api/logout.api.ts";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useRef } from "react";
 import usePasswordRegex from "../util/password-regex.util.ts";
 import ErrorMessage from "../../common/component/error-message.tsx";
 import { UserState, UserStateKey } from "../user.type.ts";
@@ -14,6 +14,7 @@ export default function SettingUser() {
   const { logout } = useLogout();
   const { updateUser } = useUpdateUser();
   const { userState, setUserState } = useUserStore();
+  const ref = useRef<HTMLDivElement>(null);
 
   // logout
   const handleClickLogout = async () => {
@@ -63,6 +64,7 @@ export default function SettingUser() {
     <>
       {userState.settingUser ? (
         <ModalBackground
+          ref={ref}
           onClose={() =>
             setUserState({
               settingUser: false,
@@ -71,7 +73,7 @@ export default function SettingUser() {
           }
           enabled={userState.settingUser}
         >
-          <div className={"bg-customBlack-700 rounded px-6 py-4"}>
+          <div ref={ref} className={"bg-customBlack-700 rounded px-6 py-4"}>
             {/* update user */}
             <form onSubmit={handleSubmit}>
               <ul className={"flex flex-col gap-y-2"}>

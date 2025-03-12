@@ -3,7 +3,7 @@ import usernameRegexUtil from "../util/username-regex.util.ts";
 import userRegisterApi from "../api/register.api.ts";
 import userRefreshAccessToken from "../../common/api/refresh-access-token.api.ts";
 import { useUserStore } from "../user.store.ts";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useRef } from "react";
 import ErrorMessage from "../../common/component/error-message.tsx";
 import { UserState, UserStateKey } from "../user.type.ts";
 import ModalBackground from "../../common/component/modal-background.tsx";
@@ -14,6 +14,7 @@ export default function Register() {
   const { register } = userRegisterApi();
   const { refreshAccessToken } = userRefreshAccessToken();
   const { userState, setUserState, resetUserState } = useUserStore();
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleClickLogin = () => {
     setUserState({ loginModal: true, registerModal: false });
@@ -48,10 +49,11 @@ export default function Register() {
     <>
       {userState.registerModal ? (
         <ModalBackground
+          ref={ref}
           onClose={() => resetUserState()}
           enabled={userState.registerModal}
         >
-          <div className={"bg-customBlack-700 rounded px-6 py-4"}>
+          <div ref={ref} className={"bg-customBlack-700 rounded px-6 py-4"}>
             <form onSubmit={handleSubmit}>
               <ul className={"flex w-full flex-col gap-y-2"}>
                 {/* username */}

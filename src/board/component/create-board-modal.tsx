@@ -1,6 +1,6 @@
 import ModalBackground from "../../common/component/modal-background.tsx";
 import { useBoardStore } from "../board.store.ts";
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, FormEvent, useRef } from "react";
 import { BoardState, BoardStateKey } from "../board.type.ts";
 import IconAttachment from "../../common/component/icon-attachment.tsx";
 import useTitleRegexBoard from "../util/title-regex-board.util.ts";
@@ -12,6 +12,7 @@ export default function CreateBoardModal() {
   const { titleRegex } = useTitleRegexBoard();
   const { boardState, setBoardState, resetBoardState } = useBoardStore();
   const navigate = useNavigate();
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -31,10 +32,14 @@ export default function CreateBoardModal() {
     <>
       {boardState.createModal ? (
         <ModalBackground
+          ref={ref}
           onClose={() => setBoardState({ createModal: false })}
           enabled={boardState.createModal}
         >
-          <div className={"bg-customBlack-700 h-52 rounded-sm px-6 py-4"}>
+          <div
+            ref={ref}
+            className={"bg-customBlack-700 h-52 rounded-sm px-6 py-4"}
+          >
             <form onSubmit={handleSubmit} className={"flex flex-col gap-y-4"}>
               <div className={"flex items-center gap-x-2"}>
                 {/* icon */}
