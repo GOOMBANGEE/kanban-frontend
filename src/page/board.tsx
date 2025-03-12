@@ -1,13 +1,13 @@
 import Header from "../common/component/header.tsx";
-import useFetchBoardList from "./api/fetch-board-list.api.ts";
+import useFetchBoardList from "../board/api/fetch-board-list.api.ts";
 import { useTokenStore } from "../common/store/token.store.ts";
-import { useBoardStore } from "./board.store.ts";
+import { useBoardStore } from "../board/board.store.ts";
 import { useGlobalStore } from "../common/store/global.store.ts";
-import BoardItem from "./component/board-item.tsx";
-import CreateBoardButton from "./component/create-board-button.tsx";
-import CreateBoardModal from "./component/create-board-modal.tsx";
-import SettingBoardModal from "./component/setting-board-modal.tsx";
-import DeleteBoardModal from "./component/delete-board-modal.tsx";
+import BoardItem from "../board/component/board-item.tsx";
+import CreateBoardButton from "../board/component/create-board-button.tsx";
+import CreateBoardModal from "../board/component/create-board-modal.tsx";
+import SettingBoardModal from "../board/component/setting-board-modal.tsx";
+import DeleteBoardModal from "../board/component/delete-board-modal.tsx";
 import { useEffect } from "react";
 
 export default function Board() {
