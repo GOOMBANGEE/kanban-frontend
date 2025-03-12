@@ -2,13 +2,16 @@ import { Board } from "../board.type.ts";
 import { useEnvStore } from "../../common/store/env.store.ts";
 import boardSVG from "../../../public/board.svg";
 import { useBoardStore } from "../board.store.ts";
+import { useNavigate } from "react-router-dom";
 
 export default function BoardItem(props: Readonly<Board>) {
-  const { boardState, setBoardState } = useBoardStore();
+  const { boardState, setBoardState, resetBoardState } = useBoardStore();
   const { envState } = useEnvStore();
+  const navigate = useNavigate();
 
   const handleClickBoard = () => {
-    console.log("handleClick board");
+    navigate(`/board/${props.id}`);
+    resetBoardState();
   };
 
   const handleMouseEnter = () => {

@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-    --color-customBlack-100: #1E1F22;
+    --color-customBlack-100: #1E1F22; /* default background */
     --color-customBlack-200: #25262A;
     --color-customBlack-300: #2B2D31;
-    --color-customBlack-400: #2F3135; /* default background */
+    --color-customBlack-400: #2F3135;
     --color-customBlack-500: #323439;
     --color-customBlack-600: #383A40;
     --color-customBlack-700: #4A4C51;
@@ -16,4 +16,20 @@
     --color-customGray-500: #B1B7BE;
 
     --color-customText: #EBEBEB;
+}
+
+/* Custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 12px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #6b7280;
+    border-radius: 10px;
+    border: 3px solid transparent;
+    background-clip: content-box;
 }
