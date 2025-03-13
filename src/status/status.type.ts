@@ -1,3 +1,5 @@
+import { Ticket } from "../ticket/ticket.type.ts";
+
 export const statusColor = {
   black: "bg-slate-700",
   gray: "bg-gray-600",
@@ -23,6 +25,7 @@ export type Status = {
   color: keyof typeof statusColor;
   displayOrder: number | undefined;
   group: keyof typeof statusGroup;
+  Ticket: Ticket[];
 };
 
 export type StatusState = Status & {

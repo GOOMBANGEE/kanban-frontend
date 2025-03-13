@@ -1,9 +1,14 @@
 import { Status, statusColor } from "../status.type.ts";
 import { useStatusStore } from "../status.store.ts";
 import SettingStatusButton from "./setting-status-button.tsx";
+import CreateTicketButton from "../../ticket/component/create-ticket-button.tsx";
+import CreateTicket from "../../ticket/component/create-ticket.tsx";
+import TicketItem from "../../ticket/component/ticket-item.tsx";
+import { useTicketStore } from "../../ticket/ticket.store.ts";
 
 export default function StatusItem(props: Readonly<Status>) {
   const { setStatusState } = useStatusStore();
+  const { ticketState } = useTicketStore();
 
   const backgroundColor = Object.entries(statusColor).find(
     ([color]) => color === props.color,
@@ -15,6 +20,14 @@ export default function StatusItem(props: Readonly<Status>) {
   const handleMouseLeave = () => {
     setStatusState({ hover: false });
   };
+
+  const sortedList = props.Ticket.filter(
+    (ticket) => ticket.statusId === props.id,
+  ).toSorted((a, b) => {
+    const orderA = a.displayOrder ?? Number.MAX_SAFE_INTEGER;
+    const orderB = b.displayOrder ?? Number.MAX_SAFE_INTEGER;
+    return orderA - orderB;
+  });
 
   return (
     <div
@@ -31,8 +44,18 @@ export default function StatusItem(props: Readonly<Status>) {
 
         <SettingStatusButton {...props} />
       </div>
-      {/*<div>ticket list</div>*/}
-      {/*ticket create*/}
+
+      <div className={"mb-1 flex flex-col gap-y-1"}>
+        {sortedList?.map((ticket) => (
+          <TicketItem key={ticket.id} {...ticket} />
+        ))}
+      </div>
+
+      <CreateTicketButton statusId={props.id} />
+
+      {props.id === ticketState.statusId && ticketState.create ? (
+        <CreateTicket />
+      ) : null}
     </div>
   );
 }

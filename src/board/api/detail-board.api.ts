@@ -14,8 +14,8 @@ export default function useDetailBoard() {
     const boardUrl = envState.boardUrl;
     const response = await axios.get(`${boardUrl}/${boardId}`);
 
-    setStatusListState(response.data.statusList);
     setBoardState(response.data.board);
+    setStatusListState(response.data.statusList);
   };
 
   return { detailBoard };

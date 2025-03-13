@@ -25,6 +25,7 @@ const initialStatusState: StatusState = {
   group: Object.entries(statusGroup).find(
     ([, v]) => v === statusGroup.todo,
   )?.[0] as keyof typeof statusGroup,
+  Ticket: [],
 
   // create, update
   create: false,
