@@ -31,7 +31,12 @@ const initialStatusState: StatusState = {
   groupList: false,
 
   hover: false,
+  focusId: undefined,
+  setting: false,
+  settingX: undefined,
+  settingY: undefined,
   update: false,
+  delete: false,
 };
 
 const initialStatusListState: Status[] = [];

@@ -7,6 +7,8 @@ import { useBoardStore } from "../board/board.store.ts";
 import CreateStatusButton from "../status/component/create-status-button.tsx";
 import CreateStatusModal from "../status/component/create-status-modal.tsx";
 import StatusItem from "../status/component/status-item.tsx";
+import SettingStatusModal from "../status/component/setting-status-modal.tsx";
+import DeleteStatusModal from "../status/component/delete-status-modal.tsx";
 
 export default function BoardDetail() {
   const { detailBoard } = useDetailBoard();
@@ -42,11 +44,14 @@ export default function BoardDetail() {
 
       <div
         ref={statusListRef}
-        className={"custom-scrollbar flex gap-x-2 overflow-x-scroll px-12"}
+        className={"custom-scrollbar flex gap-x-4 overflow-x-auto px-12"}
       >
         {sortedList?.map((status) => (
           <StatusItem key={status.id} {...status} />
         ))}
+
+        <SettingStatusModal />
+        <DeleteStatusModal />
 
         <CreateStatusButton />
         <CreateStatusModal />

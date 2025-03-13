@@ -26,10 +26,16 @@ export type Status = {
 };
 
 export type StatusState = Status & {
-  // create, update
+  // create
   create: boolean;
   groupList: boolean;
 
+  // update
   hover: boolean;
+  focusId: string | undefined;
+  setting: boolean;
+  settingX: number | undefined;
+  settingY: number | undefined;
   update: boolean;
+  delete: boolean;
 };
