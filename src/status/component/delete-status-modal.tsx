@@ -18,20 +18,16 @@ export default function DeleteStatusModal() {
   };
 
   return (
-    <>
-      {statusState.delete ? (
-        <ModalBackground
-          ref={ref}
-          onClose={() => setStatusState({ delete: false })}
-          enabled={statusState.delete}
-        >
-          <div ref={ref} className={"bg-customBlack-700 rounded-sm px-6 py-4"}>
-            <div>Are you sure you want to delete status?</div>
-            <button onClick={handleClickDelete}>Delete</button>
-            <button onClick={handleClickCancel}>Cancel</button>
-          </div>
-        </ModalBackground>
-      ) : null}
-    </>
+    <ModalBackground
+      ref={ref}
+      onClose={() => setStatusState({ delete: false })}
+      enabled={statusState.delete}
+    >
+      <div ref={ref} className={"bg-customBlack-700 rounded-sm px-6 py-4"}>
+        <div>Are you sure you want to delete status?</div>
+        <button onClick={handleClickDelete}>Delete</button>
+        <button onClick={handleClickCancel}>Cancel</button>
+      </div>
+    </ModalBackground>
   );
 }

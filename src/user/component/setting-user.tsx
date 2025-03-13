@@ -61,89 +61,85 @@ export default function SettingUser() {
   };
 
   return (
-    <>
-      {userState.settingUser ? (
-        <ModalBackground
-          ref={ref}
-          onClose={() =>
-            setUserState({
-              settingUser: false,
-              passwordErrorMessage: undefined,
-            })
-          }
-          enabled={userState.settingUser}
-        >
-          <div ref={ref} className={"bg-customBlack-700 rounded px-6 py-4"}>
-            {/* update user */}
-            <form onSubmit={handleSubmit}>
-              <ul className={"flex flex-col gap-y-2"}>
-                {/* username */}
-                <li className={"flex"}>
-                  <input
-                    type={"text"}
-                    placeholder={"username"}
-                    defaultValue={userState.username}
-                    onChange={handleChangeInput(
-                      UserStateKey.newUsername,
-                      UserStateKey.usernameErrorMessage,
-                    )}
-                    className={"bg-customBlack-400 text-customText"}
-                  />
-                  {/* logout */}
-                  <button onClick={handleClickLogout}>Logout</button>
-                </li>
+    <ModalBackground
+      ref={ref}
+      onClose={() =>
+        setUserState({
+          settingUser: false,
+          passwordErrorMessage: undefined,
+        })
+      }
+      enabled={userState.settingUser}
+    >
+      <div ref={ref} className={"bg-customBlack-700 rounded px-6 py-4"}>
+        {/* update user */}
+        <form onSubmit={handleSubmit}>
+          <ul className={"flex flex-col gap-y-2"}>
+            {/* username */}
+            <li className={"flex"}>
+              <input
+                type={"text"}
+                placeholder={"username"}
+                defaultValue={userState.username}
+                onChange={handleChangeInput(
+                  UserStateKey.newUsername,
+                  UserStateKey.usernameErrorMessage,
+                )}
+                className={"bg-customBlack-400 text-customText"}
+              />
+              {/* logout */}
+              <button onClick={handleClickLogout}>Logout</button>
+            </li>
 
-                {/* previous password */}
-                <li>
-                  <input
-                    type={"password"}
-                    placeholder={"previous password "}
-                    value={userState.prevPassword ?? ""}
-                    onChange={handleChangeInput(
-                      UserStateKey.prevPassword,
-                      UserStateKey.passwordErrorMessage,
-                    )}
-                    className={"bg-customBlack-400 text-customText"}
-                  />
-                </li>
-                {/* password */}
-                <li>
-                  <input
-                    type={"password"}
-                    placeholder={"password"}
-                    value={userState.newPassword ?? ""}
-                    onChange={handleChangeInput(
-                      UserStateKey.newPassword,
-                      UserStateKey.passwordErrorMessage,
-                    )}
-                    className={"bg-customBlack-400 text-customText"}
-                  />
-                </li>
-                {/* confirm password */}
-                <li>
-                  <input
-                    type={"password"}
-                    placeholder={"confirm password"}
-                    value={userState.newConfirmPassword ?? ""}
-                    onChange={handleChangeInput(
-                      UserStateKey.newConfirmPassword,
-                      UserStateKey.passwordErrorMessage,
-                    )}
-                    className={"bg-customBlack-400 text-customText"}
-                  />
-                </li>
-              </ul>
-              <button type={"submit"}>apply</button>
-            </form>
+            {/* previous password */}
+            <li>
+              <input
+                type={"password"}
+                placeholder={"previous password "}
+                value={userState.prevPassword ?? ""}
+                onChange={handleChangeInput(
+                  UserStateKey.prevPassword,
+                  UserStateKey.passwordErrorMessage,
+                )}
+                className={"bg-customBlack-400 text-customText"}
+              />
+            </li>
+            {/* password */}
+            <li>
+              <input
+                type={"password"}
+                placeholder={"password"}
+                value={userState.newPassword ?? ""}
+                onChange={handleChangeInput(
+                  UserStateKey.newPassword,
+                  UserStateKey.passwordErrorMessage,
+                )}
+                className={"bg-customBlack-400 text-customText"}
+              />
+            </li>
+            {/* confirm password */}
+            <li>
+              <input
+                type={"password"}
+                placeholder={"confirm password"}
+                value={userState.newConfirmPassword ?? ""}
+                onChange={handleChangeInput(
+                  UserStateKey.newConfirmPassword,
+                  UserStateKey.passwordErrorMessage,
+                )}
+                className={"bg-customBlack-400 text-customText"}
+              />
+            </li>
+          </ul>
+          <button type={"submit"}>apply</button>
+        </form>
 
-            {/* error message */}
-            <ErrorMessage message={userState.passwordErrorMessage} />
+        {/* error message */}
+        <ErrorMessage message={userState.passwordErrorMessage} />
 
-            {/* delete */}
-            <button onClick={handleClickDelete}>Delete</button>
-          </div>
-        </ModalBackground>
-      ) : null}
-    </>
+        {/* delete */}
+        <button onClick={handleClickDelete}>Delete</button>
+      </div>
+    </ModalBackground>
   );
 }

@@ -7,7 +7,7 @@ import TicketItem from "../../ticket/component/ticket-item.tsx";
 import { useTicketStore } from "../../ticket/ticket.store.ts";
 
 export default function StatusItem(props: Readonly<Status>) {
-  const { setStatusState } = useStatusStore();
+  const { statusState, setStatusState } = useStatusStore();
   const { ticketState } = useTicketStore();
 
   const backgroundColor = Object.entries(statusColor).find(
@@ -42,7 +42,9 @@ export default function StatusItem(props: Readonly<Status>) {
           {props.title}
         </div>
 
-        <SettingStatusButton {...props} />
+        {props.id === statusState.id && statusState.hover ? (
+          <SettingStatusButton {...props} />
+        ) : null}
       </div>
 
       <div className={"mb-1 flex flex-col gap-y-1"}>
@@ -51,8 +53,9 @@ export default function StatusItem(props: Readonly<Status>) {
         ))}
       </div>
 
-      <CreateTicketButton statusId={props.id} />
-
+      {props.id === ticketState.statusId && ticketState.create ? null : (
+        <CreateTicketButton statusId={props.id} />
+      )}
       {props.id === ticketState.statusId && ticketState.create ? (
         <CreateTicket />
       ) : null}

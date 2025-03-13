@@ -34,31 +34,27 @@ export default function CreateStatusModal() {
   }, [statusState.create]);
 
   return (
-    <>
-      {statusState.create ? (
-        <div
-          ref={ref}
-          className={
-            "bg-customBlack-600 mr-2 flex flex-col gap-y-2 rounded-sm px-2 py-2 text-sm"
-          }
-        >
-          {/* title */}
-          <div className={"px-2"}>
-            <input
-              ref={inputRef}
-              placeholder={"Type a new option..."}
-              onChange={handleChange}
-              className={"mt-0.5 h-fit rounded-sm py-1 focus:ring"}
-            />
-          </div>
+    <div
+      ref={ref}
+      className={
+        "bg-customBlack-600 mr-2 flex flex-col gap-y-2 rounded-sm px-2 py-2 text-sm"
+      }
+    >
+      {/* title */}
+      <div className={"px-2"}>
+        <input
+          ref={inputRef}
+          placeholder={"Type a new option..."}
+          onChange={handleChange}
+          className={"mt-0.5 h-fit rounded-sm py-1 focus:ring"}
+        />
+      </div>
 
-          {/* group */}
-          <GroupSelector />
+      {/* group */}
+      <GroupSelector />
 
-          {/* color */}
-          <ColorSelector />
-        </div>
-      ) : null}
-    </>
+      {/* color */}
+      <ColorSelector />
+    </div>
   );
 }

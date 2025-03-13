@@ -50,11 +50,10 @@ export default function BoardDetail() {
           <StatusItem key={status.id} {...status} />
         ))}
 
-        <SettingStatusModal />
-        <DeleteStatusModal />
-
-        <CreateStatusButton />
-        <CreateStatusModal />
+        {statusState.setting ? <SettingStatusModal /> : null}
+        {statusState.delete ? <DeleteStatusModal /> : null}
+        {!statusState.create ? <CreateStatusButton /> : null}
+        {statusState.create ? <CreateStatusModal /> : null}
       </div>
     </>
   );

@@ -54,78 +54,76 @@ export default function Login() {
   };
 
   return (
-    <>
-      {userState.loginModal ? (
-        <div
-          className={
-            "fixed inset-0 flex h-full w-full items-center justify-center"
-          }
-        >
-          <div
-            className={
-              "bg-customBlack-400 fixed inset-0 h-full w-full opacity-70"
-            }
-          ></div>
-          <div
-            ref={modalRef}
-            className={"bg-customBlack-700 z-10 rounded px-6 py-4"}
-          >
-            <form onSubmit={handleSubmit}>
-              <ul>
-                {/* username */}
-                <li className={"mb-2 flex"}>
-                  <input
-                    placeholder={"username"}
-                    value={userState.username ?? ""}
-                    onChange={handleChangeInput(
-                      UserStateKey.username,
-                      UserStateKey.usernameErrorMessage,
-                    )}
-                    className={
-                      "bg-customBlack-400 text-customText rounded-sm px-2 py-1"
-                    }
-                  />
-                </li>
+    <div
+      className={"fixed inset-0 flex h-full w-full items-center justify-center"}
+    >
+      <div
+        className={"bg-customBlack-400 fixed inset-0 h-full w-full opacity-70"}
+      ></div>
+      <div
+        ref={modalRef}
+        className={"bg-customBlack-700 z-10 rounded px-6 py-4"}
+      >
+        <form onSubmit={handleSubmit}>
+          <ul>
+            {/* username */}
+            <li className={"mb-2 flex"}>
+              <input
+                placeholder={"username"}
+                value={userState.username ?? ""}
+                onChange={handleChangeInput(
+                  UserStateKey.username,
+                  UserStateKey.usernameErrorMessage,
+                )}
+                className={
+                  "bg-customBlack-400 text-customText rounded-sm px-2 py-1"
+                }
+              />
+            </li>
 
-                {/* password */}
-                <li className={"mb-2"}>
-                  <input
-                    type={"password"}
-                    placeholder={"password"}
-                    value={userState.password ?? ""}
-                    onChange={handleChangeInput(
-                      UserStateKey.password,
-                      UserStateKey.passwordErrorMessage,
-                    )}
-                    className={
-                      "bg-customBlack-400 text-customText rounded-sm px-2 py-1"
-                    }
-                  />
-                </li>
+            {/* password */}
+            <li className={"mb-2"}>
+              <input
+                type={"password"}
+                placeholder={"password"}
+                value={userState.password ?? ""}
+                onChange={handleChangeInput(
+                  UserStateKey.password,
+                  UserStateKey.passwordErrorMessage,
+                )}
+                className={
+                  "bg-customBlack-400 text-customText rounded-sm px-2 py-1"
+                }
+              />
+            </li>
 
-                {/* login button */}
-                <li className={"text-sm"}>
-                  <button type={"submit"} className={"rounded-sm"}>
-                    Login
-                  </button>
-                </li>
-              </ul>
-            </form>
-
-            {/* error message */}
-            <ErrorMessage message={userState.usernameErrorMessage} />
-            <ErrorMessage message={userState.passwordErrorMessage} />
-            <ErrorMessage message={userState.loginErrorMessage} />
-
-            {/* register modal button */}
-            <div className={"text-sm"}>
-              <button onClick={handleClickRegister} className={"rounded-sm"}>
-                Register
+            {/* login button */}
+            <li className={"text-sm"}>
+              <button type={"submit"} className={"rounded-sm"}>
+                Login
               </button>
-            </div>
-          </div>
+            </li>
+          </ul>
+        </form>
+
+        {/* error message */}
+        {userState.usernameErrorMessage ? (
+          <ErrorMessage message={userState.usernameErrorMessage} />
+        ) : null}
+        {userState.passwordErrorMessage ? (
+          <ErrorMessage message={userState.passwordErrorMessage} />
+        ) : null}
+        {userState.loginErrorMessage ? (
+          <ErrorMessage message={userState.loginErrorMessage} />
+        ) : null}
+
+        {/* register modal button */}
+        <div className={"text-sm"}>
+          <button onClick={handleClickRegister} className={"rounded-sm"}>
+            Register
+          </button>
         </div>
-      ) : null}
-    </>
+      </div>
+    </div>
   );
 }

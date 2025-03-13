@@ -19,20 +19,16 @@ export default function DeleteUser() {
   };
 
   return (
-    <>
-      {userState.deleteUser ? (
-        <ModalBackground
-          ref={ref}
-          onClose={() => setUserState({ deleteUser: false })}
-          enabled={userState.deleteUser}
-        >
-          <div ref={ref} className={"bg-customBlack-700 rounded-sm px-6 py-4"}>
-            <div>Are you sure you want to delete your account?</div>
-            <button onClick={handleClickDelete}>Delete</button>
-            <button onClick={handleClickCancel}>Cancel</button>
-          </div>
-        </ModalBackground>
-      ) : null}
-    </>
+    <ModalBackground
+      ref={ref}
+      onClose={() => setUserState({ deleteUser: false })}
+      enabled={userState.deleteUser}
+    >
+      <div ref={ref} className={"bg-customBlack-700 rounded-sm px-6 py-4"}>
+        <div>Are you sure you want to delete your account?</div>
+        <button onClick={handleClickDelete}>Delete</button>
+        <button onClick={handleClickCancel}>Cancel</button>
+      </div>
+    </ModalBackground>
   );
 }

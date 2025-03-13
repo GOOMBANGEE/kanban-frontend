@@ -46,85 +46,81 @@ export default function Register() {
     };
 
   return (
-    <>
-      {userState.registerModal ? (
-        <ModalBackground
-          ref={ref}
-          onClose={() => resetUserState()}
-          enabled={userState.registerModal}
-        >
-          <div ref={ref} className={"bg-customBlack-700 rounded px-6 py-4"}>
-            <form onSubmit={handleSubmit}>
-              <ul className={"flex w-full flex-col gap-y-2"}>
-                {/* username */}
-                <li className={"mb-2 flex"}>
-                  <input
-                    placeholder={"username"}
-                    value={userState.username ?? ""}
-                    onChange={handleChangeInput(
-                      UserStateKey.username,
-                      UserStateKey.usernameErrorMessage,
-                    )}
-                    className={
-                      "bg-customBlack-400 text-customText rounded-sm px-2 py-1"
-                    }
-                  />
-                </li>
+    <ModalBackground
+      ref={ref}
+      onClose={() => resetUserState()}
+      enabled={userState.registerModal}
+    >
+      <div ref={ref} className={"bg-customBlack-700 rounded px-6 py-4"}>
+        <form onSubmit={handleSubmit}>
+          <ul className={"flex w-full flex-col gap-y-2"}>
+            {/* username */}
+            <li className={"mb-2 flex"}>
+              <input
+                placeholder={"username"}
+                value={userState.username ?? ""}
+                onChange={handleChangeInput(
+                  UserStateKey.username,
+                  UserStateKey.usernameErrorMessage,
+                )}
+                className={
+                  "bg-customBlack-400 text-customText rounded-sm px-2 py-1"
+                }
+              />
+            </li>
 
-                {/* password */}
-                <li className={"mb-2"}>
-                  <input
-                    type={"password"}
-                    placeholder={"password"}
-                    value={userState.password ?? ""}
-                    onChange={handleChangeInput(
-                      UserStateKey.password,
-                      UserStateKey.passwordErrorMessage,
-                    )}
-                    className={
-                      "bg-customBlack-400 text-customText rounded-sm px-2 py-1"
-                    }
-                  />
-                </li>
+            {/* password */}
+            <li className={"mb-2"}>
+              <input
+                type={"password"}
+                placeholder={"password"}
+                value={userState.password ?? ""}
+                onChange={handleChangeInput(
+                  UserStateKey.password,
+                  UserStateKey.passwordErrorMessage,
+                )}
+                className={
+                  "bg-customBlack-400 text-customText rounded-sm px-2 py-1"
+                }
+              />
+            </li>
 
-                {/* password confirm */}
-                <li className={"mb-2"}>
-                  <input
-                    type={"password"}
-                    placeholder={"confirm password"}
-                    value={userState.confirmPassword ?? ""}
-                    onChange={handleChangeInput(
-                      UserStateKey.confirmPassword,
-                      UserStateKey.passwordErrorMessage,
-                    )}
-                    className={
-                      "bg-customBlack-400 text-customText rounded-sm px-2 py-1"
-                    }
-                  />
-                </li>
+            {/* password confirm */}
+            <li className={"mb-2"}>
+              <input
+                type={"password"}
+                placeholder={"confirm password"}
+                value={userState.confirmPassword ?? ""}
+                onChange={handleChangeInput(
+                  UserStateKey.confirmPassword,
+                  UserStateKey.passwordErrorMessage,
+                )}
+                className={
+                  "bg-customBlack-400 text-customText rounded-sm px-2 py-1"
+                }
+              />
+            </li>
 
-                {/* register button */}
-                <li className={"text-sm"}>
-                  <button type={"submit"} className={"rounded-sm"}>
-                    Register
-                  </button>
-                </li>
-              </ul>
-            </form>
-
-            {/* error message */}
-            <ErrorMessage message={userState.usernameErrorMessage} />
-            <ErrorMessage message={userState.passwordErrorMessage} />
-
-            {/* login modal button */}
-            <div className={"text-sm"}>
-              <button onClick={handleClickLogin} className={"rounded-sm"}>
-                Login
+            {/* register button */}
+            <li className={"text-sm"}>
+              <button type={"submit"} className={"rounded-sm"}>
+                Register
               </button>
-            </div>
-          </div>
-        </ModalBackground>
-      ) : null}
-    </>
+            </li>
+          </ul>
+        </form>
+
+        {/* error message */}
+        <ErrorMessage message={userState.usernameErrorMessage} />
+        <ErrorMessage message={userState.passwordErrorMessage} />
+
+        {/* login modal button */}
+        <div className={"text-sm"}>
+          <button onClick={handleClickLogin} className={"rounded-sm"}>
+            Login
+          </button>
+        </div>
+      </div>
+    </ModalBackground>
   );
 }

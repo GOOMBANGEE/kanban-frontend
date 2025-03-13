@@ -12,7 +12,7 @@ import { useEffect } from "react";
 
 export default function Board() {
   const { fetchBoardList } = useFetchBoardList();
-  const { boardListState } = useBoardStore();
+  const { boardState, boardListState } = useBoardStore();
   const { tokenState } = useTokenStore();
   const { setGlobalState } = useGlobalStore();
 
@@ -29,10 +29,10 @@ export default function Board() {
       <Header />
 
       <CreateBoardButton />
-      <CreateBoardModal />
+      {boardState.createModal ? <CreateBoardModal /> : null}
 
-      <SettingBoardModal />
-      <DeleteBoardModal />
+      {boardState.settingModal ? <SettingBoardModal /> : null}
+      {boardState.deleteModal ? <DeleteBoardModal /> : null}
 
       <div className={"grid grid-cols-3 gap-x-2 gap-y-2 px-4 py-4"}>
         {boardListState.boardList.map((board) => (

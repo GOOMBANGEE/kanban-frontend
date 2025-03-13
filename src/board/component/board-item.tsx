@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import SettingBoardButton from "./setting-board-button.tsx";
 
 export default function BoardItem(props: Readonly<Board>) {
-  const { setBoardState, resetBoardState } = useBoardStore();
+  const { boardState, setBoardState, resetBoardState } = useBoardStore();
   const { envState } = useEnvStore();
   const navigate = useNavigate();
 
@@ -47,7 +47,9 @@ export default function BoardItem(props: Readonly<Board>) {
         <div className={"text-lg font-semibold"}>{props.title}</div>
       </button>
 
-      <SettingBoardButton {...props} />
+      {props.id === boardState.id && boardState.hover ? (
+        <SettingBoardButton {...props} />
+      ) : null}
     </div>
   );
 }

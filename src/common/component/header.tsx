@@ -5,7 +5,7 @@ import SettingUser from "../../user/component/setting-user.tsx";
 import DeleteUser from "../../user/component/delete-user.tsx";
 
 export default function Header() {
-  const { setUserState } = useUserStore();
+  const { userState, setUserState } = useUserStore();
   const { tokenState } = useTokenStore();
   const navigate = useNavigate();
 
@@ -28,8 +28,8 @@ export default function Header() {
         "border-customBlack-700 flex h-14 w-full items-center border-b-2 p-2"
       }
     >
-      <SettingUser />
-      <DeleteUser />
+      {userState.settingUser ? <SettingUser /> : null}
+      {userState.deleteUser ? <DeleteUser /> : null}
 
       <button
         className={"mr-auto cursor-pointer"}

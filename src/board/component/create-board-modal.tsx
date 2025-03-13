@@ -29,43 +29,36 @@ export default function CreateBoardModal() {
     };
 
   return (
-    <>
-      {boardState.createModal ? (
-        <ModalBackground
-          ref={ref}
-          onClose={() => setBoardState({ createModal: false })}
-          enabled={boardState.createModal}
-        >
-          <div
-            ref={ref}
-            className={"bg-customBlack-700 h-52 rounded-sm px-6 py-4"}
-          >
-            <form onSubmit={handleSubmit} className={"flex flex-col gap-y-4"}>
-              <div className={"flex items-center gap-x-2"}>
-                {/* icon */}
-                <IconAttachment />
-                {/* title */}
-                <input
-                  type={"text"}
-                  placeholder={"title"}
-                  value={boardState.title ?? ""}
-                  onChange={handleChangeInput(BoardStateKey.title)}
-                  className={"bg-customBlack-400 text-customText px-2"}
-                />
-              </div>
-              <div className={"flex gap-x-4 px-4"}>
-                <button type={"submit"}>create</button>
-                <button
-                  type={"reset"}
-                  onClick={() => setBoardState({ createModal: false })}
-                >
-                  cancel
-                </button>
-              </div>
-            </form>
+    <ModalBackground
+      ref={ref}
+      onClose={() => setBoardState({ createModal: false })}
+      enabled={boardState.createModal}
+    >
+      <div ref={ref} className={"bg-customBlack-700 h-52 rounded-sm px-6 py-4"}>
+        <form onSubmit={handleSubmit} className={"flex flex-col gap-y-4"}>
+          <div className={"flex items-center gap-x-2"}>
+            {/* icon */}
+            <IconAttachment />
+            {/* title */}
+            <input
+              type={"text"}
+              placeholder={"title"}
+              value={boardState.title ?? ""}
+              onChange={handleChangeInput(BoardStateKey.title)}
+              className={"bg-customBlack-400 text-customText px-2"}
+            />
           </div>
-        </ModalBackground>
-      ) : null}
-    </>
+          <div className={"flex gap-x-4 px-4"}>
+            <button type={"submit"}>create</button>
+            <button
+              type={"reset"}
+              onClick={() => setBoardState({ createModal: false })}
+            >
+              cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </ModalBackground>
   );
 }

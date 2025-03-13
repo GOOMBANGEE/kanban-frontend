@@ -3,11 +3,5 @@ type ErrorMessageProps = {
 };
 
 export default function ErrorMessage(props: Readonly<ErrorMessageProps>) {
-  return (
-    <>
-      {props.message ? (
-        <div className={"text-sm text-red-500"}>{props.message}</div>
-      ) : null}
-    </>
-  );
+  return <div className={"text-sm text-red-500"}>{props.message}</div>;
 }
