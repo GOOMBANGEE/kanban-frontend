@@ -8,6 +8,7 @@ export default function useDeleteBoard() {
 
   const deleteBoard = async () => {
     const boardUrl = envState.boardUrl;
+
     const response = await axios.delete(`${boardUrl}/${boardState.id}`);
     if (response) return true;
   };

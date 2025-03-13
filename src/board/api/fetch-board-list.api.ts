@@ -11,6 +11,7 @@ export default function useFetchBoardList() {
   const { setBoardListState } = useBoardStore();
   const { envState } = useEnvStore();
   const { setGlobalState } = useGlobalStore();
+
   const fetchBoardList = async (props: Readonly<FetchBoardList>) => {
     const boardUrl = envState.boardUrl;
     try {

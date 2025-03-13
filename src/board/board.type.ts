@@ -9,11 +9,7 @@ export type Board = {
   icon: string | undefined;
 };
 
-export type BoardState = {
-  id: string | undefined;
-  title: string | undefined;
-  icon: string | undefined;
-
+export type BoardState = Board & {
   // create
   createModal: boolean;
   uploadIcon: string | undefined;

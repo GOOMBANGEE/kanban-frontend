@@ -17,7 +17,7 @@ export default function App() {
       <Routes>
         <Route index element={<Home />} />
         <Route path="board" element={<Board />} />
-        <Route path="board/:id" element={<BoardDetail />} />
+        <Route path="board/:boardId" element={<BoardDetail />} />
       </Routes>
     </div>
   );

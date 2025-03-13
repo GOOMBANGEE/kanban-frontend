@@ -8,11 +8,11 @@ export default function useDetailBoard() {
   const { setBoardState } = useBoardStore();
   const { setStatusListState } = useStatusStore();
   const { envState } = useEnvStore();
-  const { id } = useParams();
+  const { boardId } = useParams();
 
   const detailBoard = async () => {
     const boardUrl = envState.boardUrl;
-    const response = await axios.get(`${boardUrl}/${id}`);
+    const response = await axios.get(`${boardUrl}/${boardId}`);
 
     setStatusListState(response.data.statusList);
     setBoardState(response.data.board);

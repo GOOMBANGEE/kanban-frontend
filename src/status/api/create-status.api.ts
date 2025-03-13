@@ -8,10 +8,12 @@ export default function useCreateStatus() {
   const { statusState, resetStatusState, statusListState, setStatusListState } =
     useStatusStore();
   const { envState } = useEnvStore();
-  const { id } = useParams();
+  const { boardId } = useParams();
+
   const createStatus = async () => {
     const statusUrl = envState.statusUrl;
-    const response = await axios.post(`${statusUrl}/${id}`, {
+    
+    const response = await axios.post(`${statusUrl}/${boardId}`, {
       title: statusState.title,
       color: statusState.color,
       group: statusState.group,

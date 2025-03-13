@@ -8,6 +8,7 @@ export default function useCreateBoard() {
 
   const createBoard = async () => {
     const boardUrl = envState.boardUrl;
+
     const response = await axios.post(boardUrl, {
       title: boardState.title,
       icon: boardState.uploadIcon,
