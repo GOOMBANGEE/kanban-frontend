@@ -6,7 +6,8 @@ export default function SettingTicketButton(props: Readonly<Ticket>) {
   const { setTicketState } = useTicketStore();
   const ref = useRef<HTMLButtonElement>(null);
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     setTicketState({
       ...props,
       focusId: props.id,
