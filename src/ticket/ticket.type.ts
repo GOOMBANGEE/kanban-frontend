@@ -21,8 +21,5 @@ export type TicketState = Ticket & {
   hover: boolean;
   focusId: string | undefined;
   setting: boolean;
-  settingX: number | undefined;
-  settingY: number | undefined;
   update: boolean;
-  delete: boolean;
 };

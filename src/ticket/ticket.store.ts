@@ -27,10 +27,7 @@ const initialTicketState: TicketState = {
   hover: false,
   focusId: undefined,
   setting: false,
-  settingX: undefined,
-  settingY: undefined,
   update: false,
-  delete: false,
 };
 
 export const useTicketStore = create<TicketStore>((set) => ({

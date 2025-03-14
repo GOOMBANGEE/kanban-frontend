@@ -1,11 +1,24 @@
 import { Ticket } from "../ticket.type.ts";
+import SettingTicketModal from "./setting-ticket-modal.tsx";
+import { useTicketStore } from "../ticket.store.ts";
+import SettingTicketButton from "./setting-ticket-button.tsx";
 
 export default function TicketItem(props: Readonly<Ticket>) {
+  const { ticketState, setTicketState } = useTicketStore();
+
+  const handleMouseEnter = () => {
+    setTicketState({ id: props.id, hover: true });
+  };
+
+  const handleMouseLeave = () => {
+    setTicketState({ hover: false });
+  };
+
   return (
     <div
-      className={
-        "bg-customBlack-400 hover:bg-customBlack-600 flex h-8 w-full items-center gap-x-2 rounded-md px-2 py-1 text-sm"
-      }
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`relative flex h-8 w-full items-center gap-x-2 rounded-md px-2 py-1 text-sm ${props.id === ticketState.focusId && ticketState.setting ? "bg-customBlue" : "bg-customBlack-400 hover:bg-customBlack-600"}`}
     >
       {props.content ? (
         <svg
@@ -58,6 +71,13 @@ export default function TicketItem(props: Readonly<Ticket>) {
         </svg>
       )}
       <div>{props.title}</div>
+
+      {props.id === ticketState.id && ticketState.hover ? (
+        <SettingTicketButton {...props} />
+      ) : null}
+      {props.id === ticketState.focusId && ticketState.setting ? (
+        <SettingTicketModal />
+      ) : null}
     </div>
   );
 }
