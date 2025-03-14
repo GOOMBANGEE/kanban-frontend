@@ -28,16 +28,18 @@ export default function Board() {
     <>
       <Header />
 
-      <CreateBoardButton />
-      {boardState.createModal ? <CreateBoardModal /> : null}
+      <div className={"mt-20 px-4"}>
+        <CreateBoardButton />
+        {boardState.createModal ? <CreateBoardModal /> : null}
 
-      {boardState.settingModal ? <SettingBoardModal /> : null}
-      {boardState.deleteModal ? <DeleteBoardModal /> : null}
+        {boardState.settingModal ? <SettingBoardModal /> : null}
+        {boardState.deleteModal ? <DeleteBoardModal /> : null}
 
-      <div className={"grid grid-cols-3 gap-x-2 gap-y-2 px-4 py-4"}>
-        {boardListState.boardList.map((board) => (
-          <BoardItem key={board.id} {...board} />
-        ))}
+        <div className={"grid grid-cols-3 gap-x-2 gap-y-2 py-4"}>
+          {boardListState.boardList.map((board) => (
+            <BoardItem key={board.id} {...board} />
+          ))}
+        </div>
       </div>
     </>
   );

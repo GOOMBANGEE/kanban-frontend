@@ -13,7 +13,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className={"text-customText custom-scrollbar h-full overflow-y-auto"}>
+    <div className={"text-customText h-full overflow-y-hidden"}>
       <Routes>
         <Route index element={<Home />} />
         <Route path="board" element={<Board />} />

@@ -33,7 +33,7 @@ export default function StatusItem(props: Readonly<Status>) {
     <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={"mb-4 w-56 shrink-0"}
+      className={"w-56 shrink-0"}
     >
       <div className={"flex w-full items-center"}>
         <div
@@ -59,6 +59,8 @@ export default function StatusItem(props: Readonly<Status>) {
       {props.id === ticketState.statusId && ticketState.create ? (
         <CreateTicket />
       ) : null}
+
+      <div className="block h-8" />
     </div>
   );
 }

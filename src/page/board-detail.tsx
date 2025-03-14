@@ -3,17 +3,18 @@ import { useEffect, useRef } from "react";
 import useDetailBoard from "../board/api/detail-board.api.ts";
 import { useTokenStore } from "../common/store/token.store.ts";
 import { useStatusStore } from "../status/status.store.ts";
-import { useBoardStore } from "../board/board.store.ts";
 import CreateStatusButton from "../status/component/create-status-button.tsx";
 import CreateStatusModal from "../status/component/create-status-modal.tsx";
 import StatusItem from "../status/component/status-item.tsx";
 import SettingStatusModal from "../status/component/setting-status-modal.tsx";
 import DeleteStatusModal from "../status/component/delete-status-modal.tsx";
+import { useTicketStore } from "../ticket/ticket.store.ts";
+import DetailTicket from "../ticket/component/detail-ticket.tsx";
 
 export default function BoardDetail() {
   const { detailBoard } = useDetailBoard();
-  const { boardState } = useBoardStore();
   const { statusState, statusListState } = useStatusStore();
+  const { ticketState } = useTicketStore();
   const { tokenState } = useTokenStore();
 
   const sortedList = statusListState.toSorted((a, b) => {
@@ -38,23 +39,28 @@ export default function BoardDetail() {
   }, [statusState.create]);
 
   return (
-    <>
+    <div className={"custom-scrollbar h-full overflow-y-hidden"}>
       <Header />
-      <div className={"mt-6 mb-4 px-12"}>{boardState.title}</div>
 
       <div
-        ref={statusListRef}
-        className={"custom-scrollbar flex gap-x-4 overflow-x-auto px-12"}
+        style={{ maxHeight: `calc(100vh - 80px` }}
+        className={"custom-scrollbar mt-20 flex overflow-x-auto"}
       >
-        {sortedList?.map((status) => (
-          <StatusItem key={status.id} {...status} />
-        ))}
-
-        {statusState.setting ? <SettingStatusModal /> : null}
-        {statusState.delete ? <DeleteStatusModal /> : null}
-        {!statusState.create ? <CreateStatusButton /> : null}
-        {statusState.create ? <CreateStatusModal /> : null}
+        <div
+          ref={statusListRef}
+          style={{ maxHeight: `calc(100vh - 80px` }}
+          className={`custom-scrollbar flex h-full gap-x-4 overflow-y-auto px-12 pb-20 ${ticketState.detail ? "w-1/2" : "w-full"} `}
+        >
+          {sortedList?.map((status) => (
+            <StatusItem key={status.id} {...status} />
+          ))}
+          {statusState.setting ? <SettingStatusModal /> : null}
+          {statusState.delete ? <DeleteStatusModal /> : null}
+          {!statusState.create ? <CreateStatusButton /> : null}{" "}
+          {statusState.create ? <CreateStatusModal /> : null}
+        </div>
+        {ticketState.detail ? <DetailTicket /> : null}
       </div>
-    </>
+    </div>
   );
 }

@@ -37,7 +37,7 @@ export default function CreateStatusModal() {
     <div
       ref={ref}
       className={
-        "bg-customBlack-600 mr-2 flex flex-col gap-y-2 rounded-sm px-2 py-2 text-sm"
+        "bg-customBlack-600 mr-2 flex h-fit flex-col gap-y-2 rounded-sm px-2 py-2 text-sm"
       }
     >
       {/* title */}

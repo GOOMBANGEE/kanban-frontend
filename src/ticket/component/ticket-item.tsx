@@ -18,7 +18,7 @@ export default function TicketItem(props: Readonly<Ticket>) {
     <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative flex h-8 w-full items-center gap-x-2 rounded-md px-2 py-1 text-sm ${props.id === ticketState.focusId && ticketState.setting ? "bg-customBlue" : "bg-customBlack-400 hover:bg-customBlack-600"}`}
+      className={`relative flex h-8 w-full items-center rounded-md px-2 py-1 text-sm ${props.id === ticketState.focusId && ticketState.setting ? "bg-customBlue" : "bg-customBlack-400 hover:bg-customBlack-600"}`}
     >
       {props.content ? (
         <svg

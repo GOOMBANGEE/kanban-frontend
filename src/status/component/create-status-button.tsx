@@ -11,7 +11,7 @@ export default function CreateStatusButton() {
     <button
       onClick={handleClick}
       className={
-        "bg-customBlack-700 flex h-16 items-center rounded-2xl px-2 py-1 text-sm font-semibold"
+        "bg-customBlack-400 hover:bg-customBlack-600 mb-20 flex h-16 items-center rounded-2xl px-2 py-1 text-sm font-semibold"
       }
     >
       <svg
