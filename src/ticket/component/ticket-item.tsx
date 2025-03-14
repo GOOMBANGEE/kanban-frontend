@@ -14,10 +14,15 @@ export default function TicketItem(props: Readonly<Ticket>) {
     setTicketState({ hover: false });
   };
 
+  const handleClick = () => {
+    setTicketState({ ...props, focusId: props.id, detail: true });
+  };
+
   return (
     <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       className={`relative flex h-8 w-full items-center rounded-md px-2 py-1 text-sm ${props.id === ticketState.focusId && ticketState.setting ? "bg-customBlue" : "bg-customBlack-400 hover:bg-customBlack-600"}`}
     >
       {props.content ? (

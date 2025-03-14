@@ -17,17 +17,28 @@ const initialTicketState: TicketState = {
   creationTime: undefined,
   updateTime: undefined,
 
-  boardId: undefined,
   statusId: undefined,
 
-  // create, update
+  // create
   create: false,
   createProcessing: false,
 
+  // detail
+  detail: false,
+
+  // update
   hover: false,
   focusId: undefined,
   setting: false,
-  update: false,
+
+  updateTitle: false,
+  newTitle: undefined,
+  updateContent: false,
+  newContent: undefined,
+  newDisplayOrder: undefined,
+  newStartDate: undefined,
+  newEndDate: undefined,
+  newStatusId: undefined,
 };
 
 export const useTicketStore = create<TicketStore>((set) => ({
