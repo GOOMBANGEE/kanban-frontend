@@ -54,6 +54,7 @@ export default function SettingStatusModal() {
         statusState.group !== statusRef.current?.group)
     ) {
       updateStatus();
+      statusRef.current = statusState;
     }
   }, [statusState.color, statusState.group]);
 

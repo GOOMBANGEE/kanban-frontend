@@ -22,7 +22,7 @@ export default function useUpdateStatus() {
 
     const newStatusList: Status[] = statusListState.map((status) => {
       if (status.id === statusState.focusId) {
-        return { ...response.data.result };
+        return { ...status, ...response.data.result };
       }
       return status;
     });

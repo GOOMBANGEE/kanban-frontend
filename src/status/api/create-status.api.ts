@@ -12,14 +12,19 @@ export default function useCreateStatus() {
 
   const createStatus = async () => {
     const statusUrl = envState.statusUrl;
-    
+
     const response = await axios.post(`${statusUrl}/${boardId}`, {
       title: statusState.title,
       color: statusState.color,
       group: statusState.group,
     });
 
-    const newStatusList: Status[] = [...statusListState, response.data.status];
+    const status: Status = {
+      ...response.data.status,
+      Ticket: [],
+    };
+
+    const newStatusList: Status[] = [...statusListState, status];
     setStatusListState(newStatusList);
     resetStatusState();
   };
