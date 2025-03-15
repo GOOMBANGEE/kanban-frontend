@@ -44,12 +44,12 @@ export default function BoardDetail() {
 
       <div
         style={{ maxHeight: `calc(100vh - 80px` }}
-        className={"custom-scrollbar mt-20 flex overflow-x-auto"}
+        className={"custom-scrollbar mt-20 flex h-full overflow-x-auto"}
       >
         <div
           ref={statusListRef}
           style={{ maxHeight: `calc(100vh - 80px` }}
-          className={`custom-scrollbar flex h-full gap-x-4 overflow-y-auto px-12 pb-20 ${ticketState.detail ? "w-1/2" : "w-full"} `}
+          className={`custom-scrollbar flex h-full gap-x-4 overflow-y-auto px-12 pb-20 transition-all duration-300 ${ticketState.detail ? "w-1/2" : "w-full"} transition delay-150 duration-300`}
         >
           {sortedList?.map((status) => (
             <StatusItem key={status.id} {...status} />

@@ -42,6 +42,7 @@
 
 @layer utilities {
     .custom-quill .ql-container {
+        max-height: calc(100vh - 250px) !important;
         border: 0 solid theme('colors.customGray.100') !important;
     }
 
@@ -56,4 +57,53 @@
     .custom-quill .ql-toolbar {
         border: 0 solid theme('colors.customGray.100') !important;
     }
+}
+
+
+.react-datepicker {
+    background-color: theme('colors.customBlack.300') !important;
+    border: 0 solid theme('colors.customGray.300') !important;
+    color: theme('colors.customText') !important;
+}
+
+.react-datepicker__input-container {
+    border: 0 solid theme('colors.customGray.300') !important;
+}
+
+.react-datepicker__header {
+    background-color: theme('colors.customBlack.300') !important;
+    border-bottom: 1px solid theme('colors.customGray.300') !important;
+}
+
+.react-datepicker__month-container {
+    border: 1px solid theme('colors.customGray.300') !important;
+    border-radius: var(--radius-md)
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+    color: theme('colors.customText') !important;
+}
+
+.react-datepicker__day,
+.react-datepicker__day-name {
+    color: theme('colors.customText') !important;
+}
+
+.react-datepicker__day:hover {
+    background-color: theme('colors.customGray.400') !important;
+
+}
+
+.react-datepicker__day--keyboard-selected {
+    background-color: theme('colors.customGray.300') !important;
+}
+
+.react-datepicker__day--in-selecting-range {
+    background-color: theme('colors.customGray.100') !important;
+}
+
+.react-datepicker__day--in-range {
+    background-color: theme('colors.customGray.200') !important;
 }

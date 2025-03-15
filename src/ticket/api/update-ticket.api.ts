@@ -49,6 +49,7 @@ export default function useUpdateTicket() {
       ),
     }));
     setStatusListState(newStatusList);
+    return true;
   };
 
   return { updateTicket };
