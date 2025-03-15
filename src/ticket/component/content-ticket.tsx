@@ -1,32 +1,36 @@
-import { ChangeEvent, useEffect, useRef } from "react";
-import { useClickOutside } from "../../common/util/click-outside.ts";
+import { useEffect, useRef } from "react";
 import { useTicketStore } from "../ticket.store.ts";
 import useUpdateTicket from "../api/update-ticket.api.ts";
+import ReactQuill from "react-quill-new";
 
 export default function ContentTicket() {
   const { updateTicket } = useUpdateTicket();
   const { ticketState, setTicketState } = useTicketStore();
-  const ref = useRef<HTMLInputElement>(null);
+  const ref = useRef<ReactQuill>(null);
   const stateRef = useRef<string | undefined>(undefined);
 
-  const onClose = () => {
-    if (ticketState.newContent !== stateRef.current) {
-      updateTicket({ content: ticketState.newContent });
-      setTicketState({ updateContent: false });
-    }
+  // react-quill setting
+  const reactQuillModules = {
+    toolbar: {
+      container: [
+        [{ size: ["small", false, "large", "huge"] }],
+        ["bold", "italic", "underline"],
+        ["link", "image"],
+      ],
+    },
   };
-  useClickOutside({ ref, onClose, enabled: ticketState.updateContent });
 
   const handleClickContent = () => {
     setTicketState({ updateContent: true });
   };
-  const handleChangeContent = (e: ChangeEvent<HTMLInputElement>) => {
-    setTicketState({ newContent: e.target.value });
+  const handleChangeContent = (content: string) => {
+    setTicketState({ newContent: content });
   };
   useEffect(() => {
     if (ticketState.newContent !== stateRef.current) {
       updateTicket({ content: ticketState.newContent });
       stateRef.current = ticketState.newContent;
+      setTicketState({ newContent: undefined });
     }
   }, [ticketState.newContent]);
 
@@ -42,16 +46,14 @@ export default function ContentTicket() {
       onClick={handleClickContent}
       className={"flex h-full items-start text-start text-sm"}
     >
-      <input
+      <ReactQuill
         ref={ref}
-        value={ticketState.newContent ?? ticketState.content ?? ""}
-        onChange={handleChangeContent}
-        className={"flex items-start justify-start text-start outline-hidden"}
+        defaultValue={ticketState.content}
+        onChange={(content) => handleChangeContent(content)}
+        modules={reactQuillModules}
+        placeholder={"content"}
+        className={"custom-quill h-full w-full"}
       />
-
-      {ticketState.content || ticketState.newContent ? null : (
-        <div className={"text-customGray-300 absolute"}>Content</div>
-      )}
     </button>
   );
 }

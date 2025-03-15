@@ -39,3 +39,21 @@
 ::-webkit-scrollbar-corner {
     background: transparent;
 }
+
+@layer utilities {
+    .custom-quill .ql-container {
+        border: 0 solid theme('colors.customGray.100') !important;
+    }
+
+    .custom-quill .ql-editor {
+        padding: 0 !important;
+    }
+
+    .ql-editor.ql-blank::before {
+        color: theme('colors.customGray.300') !important
+    }
+
+    .custom-quill .ql-toolbar {
+        border: 0 solid theme('colors.customGray.100') !important;
+    }
+}
