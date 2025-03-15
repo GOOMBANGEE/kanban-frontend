@@ -5,9 +5,10 @@ type Props = {
 };
 
 export default function CreateTicketButton(props: Readonly<Props>) {
-  const { setTicketState } = useTicketStore();
+  const { setTicketState, resetTicketState } = useTicketStore();
 
   const handleClick = () => {
+    resetTicketState();
     setTicketState({ create: true, statusId: props.statusId });
   };
 

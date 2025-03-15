@@ -3,13 +3,20 @@ import { useTicketStore } from "../ticket.store.ts";
 import { useClickOutside } from "../../common/util/click-outside.ts";
 import TitleTicket from "./title-ticket.tsx";
 import ContentTicket from "./content-ticket.tsx";
+import useUpdateTicket from "../api/update-ticket.api.ts";
 
 export default function DetailTicket() {
+  const { updateTicket } = useUpdateTicket();
   const { ticketState, setTicketState } = useTicketStore();
 
   const ref = useRef<HTMLDivElement>(null);
   const onClose = () => {
-    setTicketState({ detail: false });
+    updateTicket({
+      title: ticketState.newTitle,
+      content: ticketState.newContent,
+    });
+
+    setTicketState({ detail: false, updateTitle: false, updateContent: false });
   };
   useClickOutside({ ref, onClose, enabled: ticketState.detail });
 

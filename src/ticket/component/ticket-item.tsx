@@ -15,7 +15,12 @@ export default function TicketItem(props: Readonly<Ticket>) {
   };
 
   const handleClick = () => {
-    setTicketState({ ...props, focusId: props.id, detail: true });
+    setTicketState({
+      ...props,
+      focusId: props.id,
+      detail: true,
+      updateTitle: true,
+    });
   };
 
   return (
