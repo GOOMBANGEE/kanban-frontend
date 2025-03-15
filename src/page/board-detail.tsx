@@ -51,9 +51,17 @@ export default function BoardDetail() {
           style={{ maxHeight: `calc(100vh - 80px` }}
           className={`custom-scrollbar flex h-full gap-x-4 overflow-y-auto px-12 pb-20 transition-all duration-300 ${ticketState.detail ? "w-1/2" : "w-full"} transition delay-150 duration-300`}
         >
-          {sortedList?.map((status) => (
-            <StatusItem key={status.id} {...status} />
-          ))}
+          {sortedList?.map((status, index) => {
+            const prev =
+              index > 0 ? sortedList[index - 1].displayOrder : undefined;
+            const next =
+              index < sortedList.length - 1
+                ? sortedList[index + 1].displayOrder
+                : undefined;
+            return (
+              <StatusItem key={status.id} {...status} prev={prev} next={next} />
+            );
+          })}
           {statusState.setting ? <SettingStatusModal /> : null}
           {statusState.delete ? <DeleteStatusModal /> : null}
           {!statusState.create ? <CreateStatusButton /> : null}{" "}

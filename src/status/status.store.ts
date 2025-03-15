@@ -27,10 +27,11 @@ const initialStatusState: StatusState = {
   )?.[0] as keyof typeof statusGroup,
   Ticket: [],
 
-  // create, update
+  // create
   create: false,
   groupList: false,
 
+  // update
   hover: false,
   focusId: undefined,
   setting: false,
@@ -38,6 +39,10 @@ const initialStatusState: StatusState = {
   settingY: undefined,
   update: false,
   delete: false,
+
+  // update display order
+  prev: undefined,
+  next: undefined,
 };
 
 const initialStatusListState: Status[] = [];

@@ -41,4 +41,8 @@ export type StatusState = Status & {
   settingY: number | undefined;
   update: boolean;
   delete: boolean;
+
+  // update display order
+  prev: number | undefined;
+  next: number | undefined;
 };
