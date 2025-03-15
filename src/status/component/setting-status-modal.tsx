@@ -1,62 +1,23 @@
 import { useStatusStore } from "../status.store.ts";
 import { useClickOutside } from "../../common/util/click-outside.ts";
-import { ChangeEvent, useEffect, useRef } from "react";
+import { useRef } from "react";
 import ColorSelector from "./color-selector.tsx";
 import GroupSelector from "./group-selector.tsx";
-import useUpdateStatus from "../api/update-status.api.ts";
-import { Status } from "../status.type.ts";
+import TitleStatus from "./title-status.tsx";
 
 export default function SettingStatusModal() {
-  const { updateStatus } = useUpdateStatus();
   const { statusState, setStatusState, resetStatusState } = useStatusStore();
   const ref = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const statusRef = useRef<Status>(null);
-
-  const onClose = async () => {
-    if (
-      statusState.title !== statusRef.current?.title ||
-      statusState.color !== statusRef.current?.color ||
-      statusState.group !== statusRef.current?.group
-    ) {
-      await updateStatus();
-      resetStatusState();
-      return;
-    }
-    resetStatusState();
-  };
 
   useClickOutside({
     ref,
-    onClose,
+    onClose: () => resetStatusState(),
     enabled: statusState.setting,
   });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setStatusState({ title: e.target.value });
-  };
 
   const handleClickDelete = () => {
     setStatusState({ setting: false, delete: true });
   };
-
-  useEffect(() => {
-    if (statusState.setting) {
-      inputRef.current?.focus();
-      statusRef.current = { ...statusState };
-    }
-  }, [statusState.setting]);
-
-  useEffect(() => {
-    if (
-      statusState.focusId &&
-      (statusState.color !== statusRef.current?.color ||
-        statusState.group !== statusRef.current?.group)
-    ) {
-      updateStatus();
-      statusRef.current = statusState;
-    }
-  }, [statusState.color, statusState.group]);
 
   return (
     <div
@@ -70,15 +31,9 @@ export default function SettingStatusModal() {
       }
     >
       {/* title */}
-      <div className={"px-2"}>
-        <input
-          ref={inputRef}
-          value={statusState.title ?? ""}
-          placeholder={"Type a new option..."}
-          onChange={handleChange}
-          className={"mt-0.5 mb-2 h-fit rounded-sm py-1 focus:ring"}
-        />
-      </div>
+      <TitleStatus />
+
+      {/* delete button */}
       <button
         onClick={handleClickDelete}
         className={
@@ -110,7 +65,6 @@ export default function SettingStatusModal() {
         </svg>
         Delete
       </button>
-
       {/* group */}
       <GroupSelector />
 

@@ -14,6 +14,7 @@ type Props = {
   endDate?: string;
   statusId?: string;
 };
+
 export default function useUpdateTicket() {
   const { statusListState, setStatusListState } = useStatusStore();
   const { ticketState } = useTicketStore();

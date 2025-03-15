@@ -4,20 +4,30 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Status } from "../status.type.ts";
 
+type Props = {
+  title?: string;
+  color?: string;
+  displayOrder?: number;
+  group?: string;
+};
+
 export default function useUpdateStatus() {
   const { statusState, statusListState, setStatusListState } = useStatusStore();
   const { envState } = useEnvStore();
   const { boardId } = useParams();
 
-  const updateStatus = async () => {
+  const updateStatus = async (props: Readonly<Props>) => {
     const statusUrl = envState.statusUrl;
+    const updateData = {
+      title: props.title,
+      color: props.color,
+      displayOrder: props.displayOrder,
+      group: props.group,
+    };
+
     const response = await axios.patch(
       `${statusUrl}/${boardId}/${statusState.focusId}`,
-      {
-        title: statusState.title,
-        color: statusState.color,
-        group: statusState.group,
-      },
+      updateData,
     );
 
     const newStatusList: Status[] = statusListState.map((status) => {

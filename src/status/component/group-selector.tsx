@@ -2,10 +2,13 @@ import { useStatusStore } from "../status.store.ts";
 import { useRef } from "react";
 import { statusGroup } from "../status.type.ts";
 import { useClickOutside } from "../../common/util/click-outside.ts";
+import useUpdateStatus from "../api/update-status.api.ts";
 
 export default function GroupSelector() {
+  const { updateStatus } = useUpdateStatus();
   const { statusState, setStatusState } = useStatusStore();
   const ref = useRef<HTMLDivElement>(null);
+  const stateRef = useRef<string>(statusState.group);
 
   const handleClickGroup = () => {
     setStatusState({ groupList: true });
@@ -19,6 +22,10 @@ export default function GroupSelector() {
 
   const handleClick = (group: keyof typeof statusGroup) => {
     setStatusState({ group: group, groupList: false });
+    if (group !== stateRef.current) {
+      updateStatus({ group });
+      stateRef.current = statusState.group;
+    }
   };
 
   return (

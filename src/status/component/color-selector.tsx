@@ -1,11 +1,19 @@
 import { useStatusStore } from "../status.store.ts";
 import { statusColor } from "../status.type.ts";
+import { useRef } from "react";
+import useUpdateStatus from "../api/update-status.api.ts";
 
 export default function ColorSelector() {
+  const { updateStatus } = useUpdateStatus();
   const { statusState, setStatusState } = useStatusStore();
+  const stateRef = useRef<string>(statusState.color);
 
   const handleClick = (color: keyof typeof statusColor) => {
     setStatusState({ color: color });
+    if (color !== stateRef.current) {
+      updateStatus({ color });
+      stateRef.current = statusState.color;
+    }
   };
 
   return (
