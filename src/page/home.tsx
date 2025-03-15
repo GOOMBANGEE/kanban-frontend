@@ -1,17 +1,22 @@
 import Login from "../user/component/login.tsx";
 import Register from "../user/component/register.tsx";
 import Header from "../common/component/header.tsx";
+import { useUserStore } from "../user/user.store.ts";
 import { useTokenStore } from "../common/store/token.store.ts";
 import { useNavigate } from "react-router-dom";
-import { useUserStore } from "../user/user.store.ts";
+import { useEffect } from "react";
 
 export default function Home() {
   const { userState } = useUserStore();
   const { tokenState } = useTokenStore();
   const navigate = useNavigate();
-  if (tokenState) {
-    navigate("/board");
-  }
+
+  useEffect(() => {
+    if (tokenState) {
+      navigate("/board");
+    }
+  }, [tokenState]);
+
   return (
     <>
       <Header />
