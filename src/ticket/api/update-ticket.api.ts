@@ -2,9 +2,6 @@ import { useTicketStore } from "../ticket.store.ts";
 import { useEnvStore } from "../../common/store/env.store.ts";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useStatusStore } from "../../status/status.store.ts";
-import { Status } from "../../status/status.type.ts";
-import { Ticket } from "../ticket.type.ts";
 
 type Props = {
   title?: string;
@@ -16,10 +13,10 @@ type Props = {
 };
 
 export default function useUpdateTicket() {
-  const { statusListState, setStatusListState } = useStatusStore();
   const { ticketState } = useTicketStore();
   const { envState } = useEnvStore();
   const { boardId } = useParams();
+  const { ticketListState, setTicketListState } = useTicketStore();
 
   const updateTicket = async (props: Readonly<Props>) => {
     const ticketUrl = envState.ticketUrl;
@@ -29,7 +26,7 @@ export default function useUpdateTicket() {
       displayOrder: props.displayOrder,
       startDate: props.startDate,
       endDate: props.endDate,
-      statusId: props.statusId,
+      statusId: Number(props.statusId),
     };
 
     await axios.patch(
@@ -41,15 +38,16 @@ export default function useUpdateTicket() {
       Object.entries(updateData).filter(([, v]) => v !== undefined),
     );
 
-    const newStatusList: Status[] = statusListState.map((status: Status) => ({
-      ...status,
-      Ticket: status.Ticket.map((ticket: Ticket) =>
-        ticket.id === ticketState.focusId
-          ? { ...ticket, ...updateField }
-          : ticket,
-      ),
-    }));
-    setStatusListState(newStatusList);
+    // props.statusId = newStatusId
+    // ticketState.statusId = 기존 status
+    const newTicketList = ticketListState.map((ticket) => {
+      if (ticket.id === ticketState.focusId) {
+        return { ...ticket, ...updateField, statusId: props.statusId };
+      }
+      return ticket;
+    });
+    setTicketListState(newTicketList);
+
     return true;
   };
 

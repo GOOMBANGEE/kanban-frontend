@@ -41,6 +41,7 @@ const initialStatusState: StatusState = {
   delete: false,
 
   // update display order
+  drag: false,
   prev: undefined,
   next: undefined,
 };

@@ -9,14 +9,14 @@ import * as React from "react";
 import useUpdateStatus from "../api/update-status.api.ts";
 
 type Props = Status & {
-  prev?: number;
-  next?: number;
+  prev: number | undefined;
+  next: number | undefined;
 };
 
 export default function StatusItem(props: Readonly<Props>) {
   const { updateStatus } = useUpdateStatus();
   const { statusState, setStatusState } = useStatusStore();
-  const { ticketState } = useTicketStore();
+  const { ticketState, setTicketState, ticketListState } = useTicketStore();
 
   const backgroundColor = Object.entries(statusColor).find(
     ([color]) => color === props.color,
@@ -33,28 +33,37 @@ export default function StatusItem(props: Readonly<Props>) {
   // drag event
   const handleDragStart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setStatusState({ ...props, focusId: props.id });
+    setStatusState({ ...props, focusId: props.id, drag: true });
   };
   const handleDragEnter = (e: React.DragEvent) => {
     e.stopPropagation();
-    if (statusState.focusId === props.id) return;
-    if (
-      statusState.displayOrder &&
-      props.displayOrder &&
-      statusState.displayOrder > props.displayOrder
-    ) {
+
+    // status move
+    if (statusState.drag) {
+      if (statusState.focusId === props.id) return;
+      if (
+        statusState.displayOrder &&
+        props.displayOrder &&
+        statusState.displayOrder > props.displayOrder
+      ) {
+        setStatusState({
+          id: props.id,
+          prev: props.prev,
+          next: props.displayOrder,
+        });
+        return;
+      }
       setStatusState({
         id: props.id,
-        prev: props.prev,
-        next: props.displayOrder,
+        prev: props.displayOrder,
+        next: props.next,
       });
-      return;
     }
-    setStatusState({
-      id: props.id,
-      prev: props.displayOrder,
-      next: props.next,
-    });
+
+    // ticket move
+    if (ticketState.drag) {
+      setTicketState({ newStatusId: props.id });
+    }
   };
 
   const handleDragEnd = () => {
@@ -66,15 +75,16 @@ export default function StatusItem(props: Readonly<Props>) {
       displayOrder = statusState.prev * 2;
     }
     updateStatus({ displayOrder });
+    setStatusState({ drag: false, prev: undefined, next: undefined });
   };
 
-  const sortedList = props.Ticket.filter(
-    (ticket) => ticket.statusId === props.id,
-  ).toSorted((a, b) => {
-    const orderA = a.displayOrder ?? Number.MAX_SAFE_INTEGER;
-    const orderB = b.displayOrder ?? Number.MAX_SAFE_INTEGER;
-    return orderA - orderB;
-  });
+  const sortedList = ticketListState
+    .filter((ticket) => ticket.statusId === props.id)
+    .toSorted((a, b) => {
+      const orderA = a.displayOrder ?? Number.MAX_SAFE_INTEGER;
+      const orderB = b.displayOrder ?? Number.MAX_SAFE_INTEGER;
+      return orderA - orderB;
+    });
 
   return (
     <div
@@ -90,6 +100,7 @@ export default function StatusItem(props: Readonly<Props>) {
           className={`${backgroundColor} mb-2 w-fit rounded-sm px-1 text-xs`}
         >
           {props.title}
+          {props.id}
         </div>
 
         {props.id === statusState.id && statusState.hover ? (
@@ -98,9 +109,18 @@ export default function StatusItem(props: Readonly<Props>) {
       </div>
 
       <div className={"mb-1 flex flex-col gap-y-1"}>
-        {sortedList?.map((ticket) => (
-          <TicketItem key={ticket.id} {...ticket} />
-        ))}
+        {sortedList?.map((ticket, index) => {
+          const prev =
+            index > 0 ? sortedList[index - 1].displayOrder : undefined;
+          const next =
+            index < sortedList.length - 1
+              ? sortedList[index + 1].displayOrder
+              : undefined;
+
+          return (
+            <TicketItem key={ticket.id} {...ticket} prev={prev} next={next} />
+          );
+        })}
       </div>
 
       {props.id === ticketState.statusId && ticketState.create ? null : (

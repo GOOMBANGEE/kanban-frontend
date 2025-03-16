@@ -2,11 +2,89 @@ import { Ticket } from "../ticket.type.ts";
 import SettingTicketModal from "./setting-ticket-modal.tsx";
 import { useTicketStore } from "../ticket.store.ts";
 import SettingTicketButton from "./setting-ticket-button.tsx";
+import * as React from "react";
+import useUpdateTicket from "../api/update-ticket.api.ts";
 
-export default function TicketItem(props: Readonly<Ticket>) {
+type Props = Ticket & {
+  prev: number | undefined;
+  next: number | undefined;
+};
+
+export default function TicketItem(props: Readonly<Props>) {
+  const { updateTicket } = useUpdateTicket();
   const { ticketState, setTicketState } = useTicketStore();
 
-  const handleMouseEnter = () => {
+  // drag event
+  const handleDragStart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setTicketState({
+      ...props,
+      statusId: props.statusId,
+      focusId: props.id,
+      drag: true,
+    });
+  };
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.stopPropagation();
+
+    if (ticketState.focusId === props.id) return;
+    if (ticketState.statusId === props.statusId) {
+      if (
+        ticketState.displayOrder &&
+        props.displayOrder &&
+        ticketState.displayOrder > props.displayOrder
+      ) {
+        setTicketState({
+          id: props.id,
+          prev: props.prev,
+          next: props.displayOrder,
+        });
+        return;
+      }
+      setTicketState({
+        id: props.id,
+        prev: props.displayOrder,
+        next: props.next,
+      });
+      return;
+    }
+
+    if (ticketState.displayOrder && props.displayOrder) {
+      setTicketState({
+        prev: props.prev,
+        next: props.displayOrder,
+        newStatusId: props.statusId,
+      });
+    }
+  };
+
+  const handleDragEnd = (e: React.DragEvent) => {
+    e.stopPropagation();
+
+    if (ticketState.focusId === ticketState.id && !ticketState.newStatusId)
+      return;
+
+    let displayOrder;
+    if (ticketState.next) {
+      displayOrder = ((ticketState.prev ?? 0) + ticketState.next) / 2;
+    } else if (ticketState.prev && !ticketState.next) {
+      displayOrder = ticketState.prev * 2;
+    }
+
+    updateTicket({
+      displayOrder,
+      statusId: ticketState.newStatusId ?? ticketState.statusId,
+    });
+    setTicketState({
+      drag: false,
+      prev: undefined,
+      next: undefined,
+      newStatusId: undefined,
+    });
+  };
+
+  const handleMouseEnter = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setTicketState({ id: props.id, hover: true });
   };
 
@@ -25,6 +103,10 @@ export default function TicketItem(props: Readonly<Ticket>) {
 
   return (
     <div
+      draggable={true}
+      onDragStart={handleDragStart}
+      onDragEnter={handleDragEnter}
+      onDragEnd={handleDragEnd}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}

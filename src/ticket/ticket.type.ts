@@ -28,8 +28,12 @@ export type TicketState = Ticket & {
   newTitle: string | undefined;
   updateContent: boolean;
   newContent: string | undefined;
-  newDisplayOrder: number | undefined;
   newStartDate: string | undefined;
   newEndDate: string | undefined;
   newStatusId: string | undefined;
+
+  // update display order
+  drag: boolean;
+  prev: number | undefined;
+  next: number | undefined;
 };

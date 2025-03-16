@@ -43,6 +43,7 @@ export type StatusState = Status & {
   delete: boolean;
 
   // update display order
+  drag: boolean;
   prev: number | undefined;
   next: number | undefined;
 };
