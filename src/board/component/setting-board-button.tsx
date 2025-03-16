@@ -8,6 +8,7 @@ export default function SettingBoardButton(props: Readonly<Board>) {
     setBoardState({
       id: props.id,
       title: props.title,
+      inviteCode: props.inviteCode,
       icon: props.icon,
       settingModal: true,
     });

@@ -13,6 +13,7 @@ type BoardStore = {
 const initialBoardState: BoardState = {
   id: undefined,
   title: undefined,
+  inviteCode: undefined,
   icon: undefined,
 
   // create
@@ -24,6 +25,9 @@ const initialBoardState: BoardState = {
   hover: false,
   settingModal: false,
   deleteModal: false,
+
+  // invite
+  inviteCopy: false,
 };
 
 const initialBoardListState: BoardListState = {

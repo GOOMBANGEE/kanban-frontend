@@ -6,6 +6,7 @@ export const BoardStateKey = {
 export type Board = {
   id: string | undefined;
   title: string | undefined;
+  inviteCode: string | undefined;
   icon: string | undefined;
 };
 
@@ -19,6 +20,9 @@ export type BoardState = Board & {
   hover: boolean;
   settingModal: boolean;
   deleteModal: boolean;
+
+  // invite
+  inviteCopy: boolean;
 };
 
 export type BoardListState = {
