@@ -4,11 +4,13 @@ import { useTokenStore } from "../common/store/token.store.ts";
 import { useBoardStore } from "../board/board.store.ts";
 import { useGlobalStore } from "../common/store/global.store.ts";
 import BoardItem from "../board/component/board-item.tsx";
-import CreateBoardButton from "../board/component/create-board-button.tsx";
+import NewBoardButton from "../board/component/new-board-button.tsx";
 import CreateBoardModal from "../board/component/create-board-modal.tsx";
 import SettingBoardModal from "../board/component/setting-board-modal.tsx";
 import DeleteBoardModal from "../board/component/delete-board-modal.tsx";
 import { useEffect } from "react";
+import NewBoardModal from "../board/component/new-board-modal.tsx";
+import JoinBoardModal from "../board/component/join-board.modal.tsx";
 
 export default function Board() {
   const { fetchBoardList } = useFetchBoardList();
@@ -29,8 +31,10 @@ export default function Board() {
       <Header />
 
       <div className={"mt-20 px-4"}>
-        <CreateBoardButton />
+        <NewBoardButton />
+        {boardState.newModal ? <NewBoardModal /> : null}
         {boardState.createModal ? <CreateBoardModal /> : null}
+        {boardState.joinModal ? <JoinBoardModal /> : null}
 
         {boardState.settingModal ? <SettingBoardModal /> : null}
         {boardState.deleteModal ? <DeleteBoardModal /> : null}

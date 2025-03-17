@@ -1,15 +1,15 @@
 import { useBoardStore } from "../board.store.ts";
 
-export default function CreateBoardButton() {
+export default function NewBoardButton() {
   const { setBoardState } = useBoardStore();
 
-  const handleClickCreateButton = () => {
-    setBoardState({ createModal: true });
+  const handleClickButton = () => {
+    setBoardState({ newModal: true });
   };
 
   return (
     <button
-      onClick={handleClickCreateButton}
+      onClick={handleClickButton}
       className={
         "bg-customBlack-700 flex items-center rounded-2xl px-2 py-1 text-sm font-semibold"
       }

@@ -16,6 +16,11 @@ const initialBoardState: BoardState = {
   inviteCode: undefined,
   icon: undefined,
 
+  // new board modal
+  newModal: false,
+  joinModal: false,
+  check: false,
+
   // create
   createModal: false,
   uploadIcon: undefined,

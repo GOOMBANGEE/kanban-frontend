@@ -11,6 +11,11 @@ export type Board = {
 };
 
 export type BoardState = Board & {
+  // new board modal
+  newModal: boolean;
+  joinModal: boolean;
+  check: boolean;
+
   // create
   createModal: boolean;
   uploadIcon: string | undefined;
