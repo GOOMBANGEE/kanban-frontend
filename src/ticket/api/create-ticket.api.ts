@@ -2,12 +2,10 @@ import { useTicketStore } from "../ticket.store.ts";
 import { useEnvStore } from "../../common/store/env.store.ts";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useStatusStore } from "../../status/status.store.ts";
-import { Status } from "../../status/status.type.ts";
 
 export default function useCreateTicket() {
-  const { statusListState, setStatusListState } = useStatusStore();
-  const { ticketState, setTicketState } = useTicketStore();
+  const { ticketState, setTicketState, ticketListState, setTicketListState } =
+    useTicketStore();
   const { envState } = useEnvStore();
   const { boardId } = useParams();
 
@@ -21,16 +19,7 @@ export default function useCreateTicket() {
     );
 
     if (response) setTicketState({ createProcessing: false });
-    const newStatusList = statusListState.map((status: Status) => {
-      if (status.id === ticketState.statusId) {
-        return {
-          ...status,
-          Ticket: [...status.Ticket, response.data.ticket],
-        };
-      }
-      return status;
-    });
-    setStatusListState(newStatusList);
+    setTicketListState([...ticketListState, response.data.ticket]);
   };
 
   return { createTicket };

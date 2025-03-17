@@ -42,7 +42,11 @@ export default function useUpdateTicket() {
     // ticketState.statusId = 기존 status
     const newTicketList = ticketListState.map((ticket) => {
       if (ticket.id === ticketState.focusId) {
-        return { ...ticket, ...updateField, statusId: props.statusId };
+        return {
+          ...ticket,
+          ...updateField,
+          statusId: props.statusId ?? ticketState.statusId,
+        };
       }
       return ticket;
     });

@@ -2,13 +2,11 @@ import { useBoardStore } from "../board.store.ts";
 import useInviteBoard from "../api/invite-board.api.ts";
 import * as React from "react";
 import useDeleteInviteBoard from "../api/delete-invite-board.api.ts";
-import { useEnvStore } from "../../common/store/env.store.ts";
 
 export default function InviteBoard() {
   const { inviteBoard } = useInviteBoard();
   const { deleteInviteBoard } = useDeleteInviteBoard();
   const { boardState, setBoardState } = useBoardStore();
-  const { envState } = useEnvStore();
 
   const handleClickCopy = async (e: React.MouseEvent) => {
     if (!boardState.inviteCode || boardState.inviteCopy) {
@@ -16,9 +14,7 @@ export default function InviteBoard() {
       return;
     }
     e.preventDefault();
-    await navigator.clipboard.writeText(
-      String(`${envState.baseUrl}/board/${boardState.inviteCode}`),
-    );
+    await navigator.clipboard.writeText(String(boardState.inviteCode));
     setBoardState({ inviteCopy: true });
 
     setTimeout(() => {
@@ -40,9 +36,7 @@ export default function InviteBoard() {
       <div
         className={`bg-customBlack-400 w-full truncate overflow-x-hidden rounded-md px-2 py-1 text-sm ${boardState.inviteCode ? "text-customText" : "text-customGray-300"} `}
       >
-        {boardState.inviteCode
-          ? `${envState.baseUrl}/board/${boardState.inviteCode}`
-          : "Empty"}
+        {boardState.inviteCode ? boardState.inviteCode : "Empty"}
       </div>
       <div className={"mt-2 flex gap-x-1 text-xs"}>
         <button

@@ -12,10 +12,10 @@ export default function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (tokenState) {
+    if (tokenState.accessToken) {
       navigate("/board");
     }
-  }, [tokenState]);
+  }, [tokenState.accessToken]);
 
   return (
     <>

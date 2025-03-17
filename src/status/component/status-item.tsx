@@ -100,7 +100,6 @@ export default function StatusItem(props: Readonly<Props>) {
           className={`${backgroundColor} mb-2 w-fit rounded-sm px-1 text-xs`}
         >
           {props.title}
-          {props.id}
         </div>
 
         {props.id === statusState.id && statusState.hover ? (

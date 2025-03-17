@@ -1,5 +1,6 @@
 import { useTicketStore } from "../ticket.store.ts";
 import { useClickOutside } from "../../common/util/click-outside.ts";
+import * as React from "react";
 import { useRef } from "react";
 import useDeleteTicket from "../api/delete-ticket.api.ts";
 
@@ -14,7 +15,8 @@ export default function SettingTicketModal() {
     enabled: ticketState.setting,
   });
 
-  const handleClickDelete = () => {
+  const handleClickDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
     deleteTicket();
   };
 
