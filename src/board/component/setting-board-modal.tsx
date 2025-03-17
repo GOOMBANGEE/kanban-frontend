@@ -6,15 +6,18 @@ import { ChangeEvent, FormEvent, useRef } from "react";
 import useTitleRegexBoard from "../util/title-regex-board.util.ts";
 import useUpdateBoard from "../api/update-board.api.ts";
 import InviteBoard from "./invite-board.tsx";
+import { useUserStore } from "../../user/user.store.ts";
 
 export default function SettingBoardModal() {
-  const { boardState, setBoardState, resetBoardState } = useBoardStore();
-  const { titleRegex } = useTitleRegexBoard();
   const { updateBoard } = useUpdateBoard();
+  const { titleRegex } = useTitleRegexBoard();
+  const { boardState, setBoardState, resetBoardState } = useBoardStore();
+  const { userState } = useUserStore();
+
   const ref = useRef<HTMLDivElement>(null);
 
   const handleClickDelete = () => {
-    setBoardState({ deleteModal: true });
+    setBoardState({ settingModal: false, deleteModal: true });
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -42,8 +45,9 @@ export default function SettingBoardModal() {
         }
       >
         <button onClick={handleClickDelete} className={"w-full text-end"}>
-          delete
+          {boardState.userId === userState.id ? "Delete" : "Leave"}
         </button>
+
         <form onSubmit={handleSubmit} className={"flex flex-col gap-y-4"}>
           <div className={"flex items-center gap-x-2"}>
             {/* icon */}
@@ -61,15 +65,17 @@ export default function SettingBoardModal() {
                   "bg-customBlack-400 text-customText rounded-md px-2 py-1 text-sm"
                 }
               />
-              <InviteBoard />
+              {boardState.userId === userState.id ? <InviteBoard /> : null}
             </div>
           </div>
-          <div className={"flex gap-x-4 px-4"}>
-            <button type={"submit"}>update</button>
-            <button type={"reset"} onClick={resetBoardState}>
-              cancel
-            </button>
-          </div>
+          {boardState.userId === userState.id ? (
+            <div className={"flex gap-x-4 px-4"}>
+              <button type={"submit"}>update</button>
+              <button type={"reset"} onClick={resetBoardState}>
+                cancel
+              </button>
+            </div>
+          ) : null}
         </form>
       </div>
     </ModalBackground>

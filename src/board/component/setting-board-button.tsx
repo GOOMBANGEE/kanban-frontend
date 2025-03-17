@@ -10,6 +10,7 @@ export default function SettingBoardButton(props: Readonly<Board>) {
       title: props.title,
       inviteCode: props.inviteCode,
       icon: props.icon,
+      userId: props.userId,
       settingModal: true,
     });
   };

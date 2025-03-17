@@ -8,6 +8,7 @@ export type Board = {
   title: string | undefined;
   inviteCode: string | undefined;
   icon: string | undefined;
+  userId: string | undefined;
 };
 
 export type BoardState = Board & {

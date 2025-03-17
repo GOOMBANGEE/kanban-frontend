@@ -15,6 +15,7 @@ const initialBoardState: BoardState = {
   title: undefined,
   inviteCode: undefined,
   icon: undefined,
+  userId: undefined,
 
   // new board modal
   newModal: false,
