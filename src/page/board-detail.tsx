@@ -10,11 +10,15 @@ import SettingStatusModal from "../status/component/setting-status-modal.tsx";
 import DeleteStatusModal from "../status/component/delete-status-modal.tsx";
 import { useTicketStore } from "../ticket/ticket.store.ts";
 import DetailTicket from "../ticket/component/detail-ticket.tsx";
+import { useBoardStore } from "../board/board.store.ts";
+import { useSocketStore } from "../common/store/socket.store.ts";
 
 export default function BoardDetail() {
   const { detailBoard } = useDetailBoard();
+  const { boardState } = useBoardStore();
   const { statusState, statusListState } = useStatusStore();
   const { ticketState } = useTicketStore();
+  const { socket, joinBoard, leaveBoard } = useSocketStore();
   const { tokenState } = useTokenStore();
 
   const sortedList = statusListState.toSorted((a, b) => {
@@ -37,6 +41,17 @@ export default function BoardDetail() {
         });
     }
   }, [statusState.create]);
+
+  useEffect(() => {
+    if (boardState.id && socket && tokenState.accessToken) {
+      joinBoard(boardState.id);
+    }
+    return () => {
+      if (boardState.id && socket && tokenState.accessToken) {
+        leaveBoard(boardState.id);
+      }
+    };
+  }, [boardState.id, socket, tokenState.accessToken]);
 
   return (
     <div className={"custom-scrollbar h-full overflow-y-hidden"}>
