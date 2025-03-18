@@ -12,13 +12,15 @@ import { useTicketStore } from "../ticket/ticket.store.ts";
 import DetailTicket from "../ticket/component/detail-ticket.tsx";
 import { useBoardStore } from "../board/board.store.ts";
 import { useSocketStore } from "../common/store/socket.store.ts";
+import { useReceiveMessageHandler } from "../common/util/receive-message.ts";
 
 export default function BoardDetail() {
   const { detailBoard } = useDetailBoard();
+  const { receiveMessageHandler } = useReceiveMessageHandler();
   const { boardState } = useBoardStore();
   const { statusState, statusListState } = useStatusStore();
   const { ticketState } = useTicketStore();
-  const { socket, joinBoard, leaveBoard } = useSocketStore();
+  const { socket, receiveMessage, joinBoard, leaveBoard } = useSocketStore();
   const { tokenState } = useTokenStore();
 
   const sortedList = statusListState.toSorted((a, b) => {
@@ -52,6 +54,10 @@ export default function BoardDetail() {
       }
     };
   }, [boardState.id, socket, tokenState.accessToken]);
+
+  useEffect(() => {
+    if (receiveMessage) receiveMessageHandler();
+  }, [receiveMessage]);
 
   // board x scroll
   const [isDragging, setIsDragging] = useState(false);

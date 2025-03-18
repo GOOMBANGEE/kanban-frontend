@@ -2,6 +2,7 @@ import { useTicketStore } from "../ticket.store.ts";
 import { useEnvStore } from "../../common/store/env.store.ts";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Ticket } from "../ticket.type.ts";
 
 type Props = {
   title?: string;
@@ -18,40 +19,40 @@ export default function useUpdateTicket() {
   const { boardId } = useParams();
   const { ticketListState, setTicketListState } = useTicketStore();
 
-  const updateTicket = async (props: Readonly<Props>) => {
-    const ticketUrl = envState.ticketUrl;
-    const updateData = {
-      title: props.title,
-      content: props.content,
-      displayOrder: props.displayOrder,
-      startDate: props.startDate,
-      endDate: props.endDate,
-      statusId: Number(props.statusId),
-    };
+  const updateTicket = async (
+    props?: Readonly<Props>,
+    ticket?: Ticket | Partial<Ticket>[],
+  ) => {
+    if (props) {
+      const ticketUrl = envState.ticketUrl;
+      const updateData = {
+        title: props.title,
+        content: props.content,
+        displayOrder: props.displayOrder,
+        startDate: props.startDate,
+        endDate: props.endDate,
+        statusId: Number(props.statusId),
+      };
 
-    await axios.patch(
-      `${ticketUrl}/${boardId}/${ticketState.statusId}/${ticketState.focusId}`,
-      updateData,
-    );
+      const response = await axios.patch(
+        `${ticketUrl}/${boardId}/${ticketState.statusId}/${ticketState.focusId}`,
+        updateData,
+      );
+      ticket = response.data;
+    }
 
-    const updateField = Object.fromEntries(
-      Object.entries(updateData).filter(([, v]) => v !== undefined),
-    );
-
-    // props.statusId = newStatusId
-    // ticketState.statusId = 기존 status
-    const newTicketList = ticketListState.map((ticket) => {
-      if (ticket.id === ticketState.focusId) {
-        return {
-          ...ticket,
-          ...updateField,
-          statusId: props.statusId ?? ticketState.statusId,
-        };
+    const newTicketList: Ticket[] = ticketListState.map((item: Ticket) => {
+      if (Array.isArray(ticket)) {
+        const updateItem = ticket.find((t) => t.id === item.id);
+        return updateItem ? { ...item, ...updateItem } : item;
       }
-      return ticket;
+      if (ticket && !Array.isArray(ticket)) {
+        return item.id === ticket.id ? { ...item, ...ticket } : item;
+      }
+      return item;
     });
-    setTicketListState(newTicketList);
 
+    setTicketListState(newTicketList);
     return true;
   };
 

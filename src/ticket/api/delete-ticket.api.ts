@@ -9,17 +9,22 @@ export default function useDeleteTicket() {
   const { envState } = useEnvStore();
   const { boardId } = useParams();
 
-  const deleteTicket = async () => {
-    const ticketUrl = envState.ticketUrl;
+  const deleteTicket = async (ticket?: Ticket) => {
+    if (!ticket) {
+      const ticketUrl = envState.ticketUrl;
 
-    await axios.delete(
-      `${ticketUrl}/${boardId}/${ticketState.statusId}/${ticketState.id}`,
-    );
+      const response = await axios.delete(
+        `${ticketUrl}/${boardId}/${ticketState.statusId}/${ticketState.id}`,
+      );
+      ticket = response.data;
+    }
 
-    const newTicketList: Ticket[] = ticketListState.filter(
-      (ticket: Ticket) => ticket.id !== ticketState.id,
-    );
-    setTicketListState(newTicketList);
+    if (ticket) {
+      const newTicketList: Ticket[] = ticketListState.filter(
+        (item: Ticket) => item.id !== ticket.id,
+      );
+      setTicketListState(newTicketList);
+    }
   };
 
   return { deleteTicket };
