@@ -1,5 +1,5 @@
 import Header from "../common/component/header.tsx";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useDetailBoard from "../board/api/detail-board.api.ts";
 import { useTokenStore } from "../common/store/token.store.ts";
 import { useStatusStore } from "../status/status.store.ts";
@@ -53,6 +53,31 @@ export default function BoardDetail() {
     };
   }, [boardState.id, socket, tokenState.accessToken]);
 
+  // board x scroll
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!statusListRef.current || statusState.hover || ticketState.hover)
+      return;
+    setIsDragging(true);
+    setStartX(e.pageX - statusListRef.current.offsetLeft);
+    setScrollLeft(statusListRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !statusListRef.current) return;
+    e.preventDefault();
+
+    const x = e.pageX - statusListRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    statusListRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => setIsDragging(false);
+  const handleMouseLeave = () => setIsDragging(false);
+
   return (
     <div className={"custom-scrollbar h-full overflow-y-hidden"}>
       <Header />
@@ -63,6 +88,10 @@ export default function BoardDetail() {
       >
         <div
           ref={statusListRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
           style={{ maxHeight: `calc(100vh - 80px` }}
           className={`custom-scrollbar flex h-full gap-x-4 overflow-y-auto px-12 pb-20 transition-all duration-300 ${ticketState.detail ? "w-1/2" : "w-full"} transition delay-150 duration-300`}
         >

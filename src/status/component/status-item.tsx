@@ -22,14 +22,6 @@ export default function StatusItem(props: Readonly<Props>) {
     ([color]) => color === props.color,
   )?.[1];
 
-  const handleMouseEnter = () => {
-    if (ticketState.focusId === props.id) return;
-    setStatusState({ id: props.id, hover: true });
-  };
-  const handleMouseLeave = () => {
-    setStatusState({ hover: false });
-  };
-
   // drag event
   const handleDragStart = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -66,6 +58,14 @@ export default function StatusItem(props: Readonly<Props>) {
     }
   };
 
+  const handleMouseEnterTitle = () => {
+    if (ticketState.focusId === props.id) return;
+    setStatusState({ id: props.id, hover: true });
+  };
+  const handleMouseLeaveTitle = () => {
+    setStatusState({ hover: false });
+  };
+
   const handleDragEnd = () => {
     if (statusState.focusId === statusState.id) return;
     let displayOrder;
@@ -88,14 +88,17 @@ export default function StatusItem(props: Readonly<Props>) {
 
   return (
     <div
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       onDragStart={handleDragStart}
       onDragEnter={handleDragEnter}
       onDragEnd={handleDragEnd}
       className={"w-56 shrink-0"}
     >
-      <div draggable={true} className={"flex w-full items-center"}>
+      <div
+        draggable={true}
+        onMouseEnter={handleMouseEnterTitle}
+        onMouseLeave={handleMouseLeaveTitle}
+        className={"flex w-full items-center"}
+      >
         <div
           className={`${backgroundColor} mb-2 w-fit rounded-sm px-1 text-xs`}
         >
