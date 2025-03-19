@@ -14,7 +14,7 @@ type Props = {
 };
 
 export default function useUpdateTicket() {
-  const { ticketState } = useTicketStore();
+  const { ticketState, setTicketState } = useTicketStore();
   const { envState } = useEnvStore();
   const { boardId } = useParams();
   const { ticketListState, setTicketListState } = useTicketStore();
@@ -47,6 +47,9 @@ export default function useUpdateTicket() {
         return updateItem ? { ...item, ...updateItem } : item;
       }
       if (ticket && !Array.isArray(ticket)) {
+        if (ticket.id === item.id && ticket.id === ticketState.focusId) {
+          setTicketState({ ...ticket, newContent: undefined });
+        }
         return item.id === ticket.id ? { ...item, ...ticket } : item;
       }
       return item;
