@@ -25,6 +25,7 @@ export type BoardState = Board & {
   // update, delete
   hover: boolean;
   settingModal: boolean;
+  newTitle: string | undefined;
   deleteModal: boolean;
 
   // invite

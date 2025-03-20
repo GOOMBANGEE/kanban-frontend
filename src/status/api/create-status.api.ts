@@ -10,21 +10,24 @@ export default function useCreateStatus() {
   const { envState } = useEnvStore();
   const { boardId } = useParams();
 
-  const createStatus = async () => {
-    const statusUrl = envState.statusUrl;
+  const createStatus = async (status?: Status) => {
+    if (!status) {
+      const statusUrl = envState.statusUrl;
 
-    const response = await axios.post(`${statusUrl}/${boardId}`, {
-      title: statusState.title,
-      color: statusState.color,
-      group: statusState.group,
-    });
+      const response = await axios.post(`${statusUrl}/${boardId}`, {
+        title: statusState.title,
+        color: statusState.color,
+        group: statusState.group,
+      });
+      status = response.data as Status;
+    }
 
-    const status: Status = {
-      ...response.data.status,
+    const newStatus: Status = {
+      ...status,
       Ticket: [],
     };
+    const newStatusList: Status[] = [...statusListState, newStatus];
 
-    const newStatusList: Status[] = [...statusListState, status];
     setStatusListState(newStatusList);
     resetStatusState();
   };

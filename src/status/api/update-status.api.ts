@@ -16,25 +16,32 @@ export default function useUpdateStatus() {
   const { envState } = useEnvStore();
   const { boardId } = useParams();
 
-  const updateStatus = async (props: Readonly<Props>) => {
-    const statusUrl = envState.statusUrl;
-    const updateData = {
-      title: props.title,
-      color: props.color,
-      displayOrder: props.displayOrder,
-      group: props.group,
-    };
+  const updateStatus = async (props?: Readonly<Props>, status?: Status) => {
+    if (props) {
+      const statusUrl = envState.statusUrl;
+      const updateData = {
+        title: props.title,
+        color: props.color,
+        displayOrder: props.displayOrder,
+        group: props.group,
+      };
 
-    const response = await axios.patch(
-      `${statusUrl}/${boardId}/${statusState.focusId}`,
-      updateData,
-    );
+      const response = await axios.patch(
+        `${statusUrl}/${boardId}/${statusState.focusId}`,
+        updateData,
+      );
+      status = response.data as Status;
+    }
 
-    const newStatusList: Status[] = statusListState.map((status) => {
-      if (status.id === statusState.focusId) {
-        return { ...status, ...response.data.result };
+    const newStatusList: Status[] = statusListState.map((item: Status) => {
+      if (Array.isArray(status)) {
+        const updateStatus = status.find((s: Status) => s.id === item.id);
+        return updateStatus ? { ...item, ...updateStatus } : item;
       }
-      return status;
+      if (status && item.id === status.id) {
+        return { ...item, ...status };
+      }
+      return item;
     });
     setStatusListState(newStatusList);
   };

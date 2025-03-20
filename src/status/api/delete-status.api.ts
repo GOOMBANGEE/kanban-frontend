@@ -10,20 +10,23 @@ export default function useDeleteStatus() {
   const { envState } = useEnvStore();
   const { boardId } = useParams();
 
-  const deleteStatus = async () => {
-    const statusUrl = envState.statusUrl;
+  const deleteStatus = async (status?: Status) => {
+    if (!status) {
+      const statusUrl = envState.statusUrl;
 
-    const response = await axios.delete(
-      `${statusUrl}/${boardId}/${statusState.id}`,
+      const response = await axios.delete(
+        `${statusUrl}/${boardId}/${statusState.id}`,
+      );
+
+      status = response.data;
+    }
+
+    const newStatusList: Status[] = statusListState.filter(
+      (item) => item.id !== status?.id,
     );
 
-    if (response) {
-      const newStatusList: Status[] = statusListState.filter(
-        (status) => status.id !== statusState.id,
-      );
-      resetStatusState();
-      setStatusListState(newStatusList);
-    }
+    resetStatusState();
+    setStatusListState(newStatusList);
   };
 
   return { deleteStatus };

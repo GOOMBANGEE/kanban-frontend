@@ -4,32 +4,36 @@ import axios from "axios";
 import { Board } from "../board.type.ts";
 
 export default function useUpdateBoard() {
-  const { boardState, resetBoardState, boardListState, setBoardListState } =
+  const { boardState, setBoardState, boardListState, setBoardListState } =
     useBoardStore();
   const { envState } = useEnvStore();
 
-  const updateBoard = async () => {
-    const boardUrl = envState.boardUrl;
-    const icon = boardState.uploadIcon ?? boardState.icon ?? undefined;
+  const updateBoard = async (board?: Board) => {
+    if (!board) {
+      const boardUrl = envState.boardUrl;
+      const icon = boardState.uploadIcon ?? boardState.icon ?? undefined;
 
-    const response = await axios.patch(`${boardUrl}/${boardState.id}`, {
-      title: boardState.title,
-      icon: icon,
-    });
+      const response = await axios.patch(`${boardUrl}/${boardState.id}`, {
+        title: boardState.newTitle,
+        icon: icon,
+      });
+      board = response.data;
+    }
 
-    // response.data.board.id 에 해당하는 값을 찾아서 setBoardListState 실행
-    const newBoardList: Board[] = boardListState.boardList.map((board) => {
-      if (board.id === response.data.board.id) {
-        return {
-          ...board,
-          title: boardState.title,
-          icon: response.data.board.icon,
-        };
-      }
-      return board;
-    });
+    const newBoardList: Board[] = boardListState.boardList.map(
+      (item: Board) => {
+        if (board && item.id === board.id) {
+          return {
+            ...item,
+            title: board.title,
+            icon: board.icon,
+          };
+        }
+        return item;
+      },
+    );
     setBoardListState({ ...boardListState, boardList: newBoardList });
-    resetBoardState();
+    setBoardState({ ...board, newTitle: undefined });
   };
 
   return { updateBoard };

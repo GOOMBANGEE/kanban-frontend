@@ -1,7 +1,6 @@
 import { useBoardStore } from "../board.store.ts";
 import ModalBackground from "../../common/component/modal-background.tsx";
 import IconAttachment from "../../common/component/icon-attachment.tsx";
-import { BoardState, BoardStateKey } from "../board.type.ts";
 import { ChangeEvent, FormEvent, useRef } from "react";
 import useTitleRegexBoard from "../util/title-regex-board.util.ts";
 import useUpdateBoard from "../api/update-board.api.ts";
@@ -15,6 +14,7 @@ export default function SettingBoardModal() {
   const { userState } = useUserStore();
 
   const ref = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClickDelete = () => {
     setBoardState({ settingModal: false, deleteModal: true });
@@ -27,10 +27,9 @@ export default function SettingBoardModal() {
     updateBoard();
   };
 
-  const handleChangeInput =
-    (field: keyof BoardState) => (e: ChangeEvent<HTMLInputElement>) => {
-      setBoardState({ [field]: e.target.value });
-    };
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setBoardState({ newTitle: e.target.value });
+  };
 
   return (
     <ModalBackground
@@ -57,10 +56,11 @@ export default function SettingBoardModal() {
               {/* title */}
               Title
               <input
+                ref={inputRef}
                 type={"text"}
                 placeholder={"title"}
-                value={boardState.title ?? ""}
-                onChange={handleChangeInput(BoardStateKey.title)}
+                defaultValue={boardState.title ?? ""}
+                onChange={handleChangeInput}
                 className={
                   "bg-customBlack-400 text-customText rounded-md px-2 py-1 text-sm"
                 }

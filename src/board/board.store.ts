@@ -30,6 +30,7 @@ const initialBoardState: BoardState = {
   // update, delete
   hover: false,
   settingModal: false,
+  newTitle: undefined,
   deleteModal: false,
 
   // invite
