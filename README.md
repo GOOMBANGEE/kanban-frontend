@@ -16,11 +16,13 @@ Created with [React](https://react.dev/) + [Vite](https://vite.dev/) +  [Tailwin
 
 | Feature          | Package                                                  |
 |:-----------------|:---------------------------------------------------------|
-| State Management | zustand                                                  |
-| Networking       | axios, socket.io-client                                  |
-| Routing          | react-router-dom                                         |
-| Rich Text Editor | react-quill-new, dompurify (Sanitization)                |
+| Build Tool       | vite                                                     |
+| CSS Framework    | tailwind prettier-plugin-tailwindcss                     |
 | Date Handling    | react-datepicker, date-fns </br> @types/react-datepicker |
+| Networking       | axios, socket.io-client                                  |
+| Rich Text Editor | react-quill-new, dompurify (Sanitization)                |
+| Routing          | react-router-dom                                         |
+| State Management | zustand                                                  |
 
 ## Development
 
