@@ -4,15 +4,21 @@ import { useUserStore } from "../../user/user.store.ts";
 import SettingUser from "../../user/component/setting-user.tsx";
 import DeleteUser from "../../user/component/delete-user.tsx";
 import { useBoardStore } from "../../board/board.store.ts";
+import { useEnvStore } from "../store/env.store.ts";
 
 export default function Header() {
   const { boardState } = useBoardStore();
   const { userState, setUserState } = useUserStore();
   const { tokenState } = useTokenStore();
+  const { envState } = useEnvStore();
   const navigate = useNavigate();
   const { boardId } = useParams();
 
   const handleClickHomeIcon = () => {
+    if (tokenState.accessToken) {
+      navigate("/board");
+      window.location.reload();
+    }
     navigate("/");
     window.location.reload();
   };
@@ -62,7 +68,23 @@ export default function Header() {
         </button>
 
         {boardId ? (
-          <div className={"mt-6 mb-4 px-12"}>{boardState.title}</div>
+          <div className={"flex items-center gap-x-2 px-8"}>
+            {boardState.icon ? (
+              <div
+                className={
+                  "bg-customGray-100 flex h-10 w-10 items-center justify-center rounded-full"
+                }
+              >
+                <img
+                  className={"rounded-full object-contain p-1"}
+                  src={`${envState.baseUrl}/${boardState.icon}`}
+                  alt={"upload icon"}
+                />
+              </div>
+            ) : null}
+
+            <div className={"mt-6 mb-4"}>{boardState.title}</div>
+          </div>
         ) : null}
       </div>
 
