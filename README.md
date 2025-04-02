@@ -36,3 +36,11 @@ npm install
 
 npm run dev
 ```
+
+### Board
+
+![board](https://github.com/user-attachments/assets/7f2a2b7f-ce93-4415-8b85-528f3a25b289)
+
+### Ticket
+
+![ticket](https://github.com/user-attachments/assets/8d22324d-b7b0-4112-babe-1e79c3056d26)
